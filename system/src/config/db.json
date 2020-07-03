@@ -1,0 +1,26 @@
+{
+    "dev": {
+        "username": "root",
+        "password": "root",
+        "database": "koa",
+        "host": "localhost",
+        "port": "3306",
+        "dialect": "mysql"
+    },
+    "test": {
+        "username": "test",
+        "password": "test",
+        "database": "test",
+        "host": "127.0.0.1",
+        "dialect": "mysql",
+        "port": "3308"
+    },
+    "prod": {
+        "username": "root",
+        "password": "root",
+        "database": "koa",
+        "host": "172.20.10.11",
+        "dialect": "mysql",
+        "port": "3306"
+    }
+}

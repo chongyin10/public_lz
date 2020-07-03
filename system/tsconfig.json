@@ -1,0 +1,25 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowJs": true,
+    "noUnusedLocals": true,
+    "sourceMap": true,
+    "declaration": false,
+    "pretty": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "strictPropertyInitialization": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "index.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
