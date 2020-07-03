@@ -44,7 +44,6 @@ class VHeader extends React.Component<IProps, State> {
         });
         this.props.onGetSubMenus(level, key, () => { });
         this.props.onSetItemOpenKey(String(key), () => { });
-        
     }
 
     exeMenusHtml = () => {
@@ -55,13 +54,16 @@ class VHeader extends React.Component<IProps, State> {
         return <Menu theme="dark" mode="horizontal" >{menuItem}</Menu>;
     }
 
+    componentDidUpdate() {
+        console.log("@路由：", this.props.history)
+    }
+
     render() {
 
         console.log(`@默认key：${this.props.defaultSelectedKeys}`)
         console.log(`@根key：${this.props.itemOpenKey}`);
         console.log(`@一级key：${this.props.subItemOpenKey}`)
         console.log(`@二级key：${this.props.chiItemOpenKey}`);
-        console.log("@路由：", this.props.history)
 
         return (
             <Header className="header">

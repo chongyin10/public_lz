@@ -11,8 +11,9 @@ const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 export interface IProps {
-    subItemList?: IMenu,
-    childrenItemList?: IMenu,
+    subItemList?: IMenu;
+    childrenItemList?: IMenu;
+    subItemOpenKey?: string;
     onGetSubMenus(level: number, menuItem: number, callback: () => void): void;
     onSetSubItemOpenKey(subItemOpenKey: string, callback: () => void): void;
     onSetChiItemOpenKey(chiItemOpenKey: string, callback: () => void): void
@@ -36,20 +37,24 @@ class VSide extends React.Component<IProps, IState> {
 
     handleTitleClick = (event: any) => {
         let { key } = event;
-        let { subItemList } = this.props;
-        let childrenItem: Meuns = {};
-        subItemList?.forEach((item) => {
-            if (item.id === Number(key)) {
-                childrenItem = item;
+        console.log('@点击我了', this.props.subItemOpenKey);
+        console.log('@当前点击key：', key)
+        if (this.props.subItemOpenKey != key) {
+            let { subItemList } = this.props;
+            let childrenItem: Meuns = {};
+            subItemList?.forEach((item) => {
+                if (item.id === Number(key)) {
+                    childrenItem = item;
+                }
+            })
+            this.setState({
+                itemOpenKey: [String(key)]
+            })
+            if (childrenItem) {
+                this.props.onGetSubMenus(Number(childrenItem.level) + 1, Number(key), () => { });
             }
-        })
-        this.setState({
-            itemOpenKey: [String(key)]
-        })
-        if (childrenItem) {
-            this.props.onGetSubMenus(Number(childrenItem.level) + 1, Number(key), () => { });
-            this.props.onSetSubItemOpenKey(String(key), () => { });
         }
+        this.props.onSetSubItemOpenKey(String(key), () => { });
     }
 
     handleClick = (obj: any) => {
@@ -87,6 +92,7 @@ class VSide extends React.Component<IProps, IState> {
 const mapStateToProps = (state: any) => ({
     subItemList: state.RApp.subItemList,
     childrenItemList: state.RApp.childrenItemList,
+    subItemOpenKey: state.RApp.subItemOpenKey,
 });
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
     onGetSubMenus: getSubMenus,
