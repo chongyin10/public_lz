@@ -1,12 +1,11 @@
 import { Test } from '../models/Test';
+import SqlQuery from '../utils/SqlQuery';
 
 export default class TestDao extends Test {
 
     async getList() {
-        console.log(`获取getAll所有记录信息:`)
-        let items = await Test.findAll({
-            raw: true
-        });
+        let query = new SqlQuery("test", this);
+        let items = await query.querySqlAll({ id: 1 });
         return items;
     }
 

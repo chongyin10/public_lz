@@ -17,11 +17,27 @@ export default class TestDao extends Item {
     }
 
     /**
+     * 
+     */
+    async getItemAll() {
+        let items = await Item.findAll({
+            where: {
+                enable: 0
+            },
+            order: [
+                ['weight', 'ASC']
+            ],
+            raw: true
+        });
+        return items;
+    }
+
+    /**
      * 获取所有注册的信息
      */
     async getItemRegister() {
         let items = await Item.findAll({
-            attributes:['url', 'register'],
+            attributes: ['url', 'register'],
             where: {
                 enable: 0
             },

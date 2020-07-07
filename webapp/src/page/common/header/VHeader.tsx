@@ -10,7 +10,7 @@ import LogPng from '../../static/images/logo.png';
 import { IMenu, Meuns, IApp } from '@/page/interface/app';
 import { getSubMenus, setItemOpenKey } from '@/page/redux/app';
 
-export interface IProps extends RouteComponentProps{
+export interface IProps extends RouteComponentProps {
     itemList?: IMenu;
     itemOpenKey?: IApp;
     defaultSelectedKeys?: string;
@@ -44,6 +44,7 @@ class VHeader extends React.Component<IProps, State> {
         });
         this.props.onGetSubMenus(level, key, () => { });
         this.props.onSetItemOpenKey(String(key), () => { });
+        window.sessionStorage.setItem('itemOpenKey', key);
     }
 
     exeMenusHtml = () => {
@@ -51,20 +52,15 @@ class VHeader extends React.Component<IProps, State> {
         let menuItem = itemList?.map((item, index) => {
             return <Menu.Item onClick={this.onHandlerClick.bind(this)} key={item.id}><Link to={item.url || ""}>{item.name}</Link> </Menu.Item>
         })
-        return <Menu theme="dark" mode="horizontal" >{menuItem}</Menu>;
-    }
-
-    componentDidUpdate() {
-        console.log("@路由：", this.props.history)
+        let { pathname } = this.props.history.location;
+        let defaultSelectedKeys = undefined;
+        if (pathname !== '/') {
+            defaultSelectedKeys = window.sessionStorage.getItem("itemOpenKey");
+        }
+        return <Menu defaultSelectedKeys={[String(defaultSelectedKeys)]} theme="dark" mode="horizontal" >{menuItem}</Menu>;
     }
 
     render() {
-
-        console.log(`@默认key：${this.props.defaultSelectedKeys}`)
-        console.log(`@根key：${this.props.itemOpenKey}`);
-        console.log(`@一级key：${this.props.subItemOpenKey}`)
-        console.log(`@二级key：${this.props.chiItemOpenKey}`);
-
         return (
             <Header className="header">
                 <div className="logo">

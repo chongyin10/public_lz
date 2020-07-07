@@ -33,4 +33,15 @@ items.get('/getRegister', async (req, res, next) => {
     }
 });
 
+/**
+ *  获取所有功能栏
+ */
+items.get('/getItemAll', async (req, res, next) => {
+    try {
+        res.json(await itemService.getItemAll());
+    } catch (e) {
+        next(e);
+    }
+})
+
 

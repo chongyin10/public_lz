@@ -34,7 +34,20 @@ export default class ItemService {
     async getItem(level: number) {
         const itemDao = new ItemDao();
         try {
-            return await itemDao.getItem(level);
+            let itemArray = await itemDao.getItem(level);
+            return itemArray
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+
+    /**
+     *  获取所有功能
+     */
+    async getItemAll() {
+        const itemDao = new ItemDao();
+        try {
+            return await itemDao.getItemAll();
         } catch (error) {
             throw new Error(error)
         }
