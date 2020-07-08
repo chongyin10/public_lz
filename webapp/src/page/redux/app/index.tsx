@@ -113,6 +113,19 @@ export function getRegisterList() {
 }
 
 /**
+ * 【个人中心】点击item设置的key值
+ * @param personalItemKey 
+ */
+export function setPersonalItemKey(personalItemKey: string) {
+    return (dispatch: Dispatch) => {
+        dispatch({
+            type: T.SET_PERSONAL_ITEM_KEY,
+            payload: personalItemKey
+        })
+    }
+}
+
+/**
  * 
  * @param state 
  * @param action 
@@ -164,6 +177,11 @@ export default function (state = initState, action: Action) {
             return {
                 ...state,
                 modalOtherOption: action.payload
+            }
+        case T.SET_PERSONAL_ITEM_KEY:
+            return {
+                ...state,
+                personalItemKey: action.payload
             }
         default:
             return state

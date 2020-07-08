@@ -22,6 +22,12 @@ export function pathnameParser(pathname: any): void {
     }
 }
 
+export function setSessionStorageAsNull(): void {
+    window.sessionStorage.setItem("itemOpenKey", "null");
+    window.sessionStorage.setItem("subItemOpenKey", "null");
+    window.sessionStorage.setItem("chiItemOpenKey", "null");
+}
+
 /**
  * 数组中移除null和undefined值
  */

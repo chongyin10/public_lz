@@ -25,12 +25,12 @@ const exeRouteHtml = ({ registerList }: any) => {
             }
         }
     }
-    routeSwitchHTML.push(
-        <Switch key='model'>
-            <Route key='userHub' path='/personal/userHub' component={UserHub}></Route>
-            <Route key='settings' path='/personal/settings' component={Settings}></Route>
-        </Switch>
-    )
+    // routeSwitchHTML.push(
+    //     <Switch key='model'>
+    //         <Route key='userHub' path='/personal/userHub' component={UserHub}></Route>
+    //         <Route key='settings' path='/personal/settings' component={Settings}></Route>
+    //     </Switch>
+    // )
     let _r = [<Switch key="_r">{routeHTML}<Route path={'/'} ><Switch>{routeSwitchHTML}</Switch></Route></Switch>];
     return _r;
 }

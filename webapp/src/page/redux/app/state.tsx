@@ -15,9 +15,10 @@ export type State = {
         title?: string;
         visible?: boolean;
         width?: Number | string;
-        okText?: string | ReactNode;
-        cancelText?: string | ReactNode
+        okText?: string;
+        cancelText?: string
     };
+    personalItemKey?: string;
 }
 export const initState: State = {
     itemList: [],  // 菜单栏目录
@@ -33,7 +34,8 @@ export const initState: State = {
         title: "",
         okText: '确认',
         cancelText: '取消',
-    }
+    },
+    personalItemKey: undefined
 }
 export type Action = {
     type: string,

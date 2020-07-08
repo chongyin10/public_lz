@@ -6,11 +6,14 @@ import { Layout, Menu, Breadcrumb } from 'antd';
 import Router from '@/page/routers';
 import { withRouter } from 'react-router-dom';
 import { IMenu } from '@/page/interface/app';
+import BaseModal from '@/page/common/personal/BaseModal';
 
 const { Content } = Layout;
 
 export interface IProps {
-    registerList?: IMenu,
+    registerList?: IMenu;
+    modalVisible?: boolean;
+    key?:string;
 }
 
 interface State {
@@ -22,6 +25,9 @@ interface State {
 @withRouter
 class VLayout extends React.Component<IProps, State> {
     render() {
+    
+        let key = "userhub";
+
         return (
             <Layout style={{ padding: '0 24px 24px' }}>
                 <Content
@@ -33,8 +39,11 @@ class VLayout extends React.Component<IProps, State> {
                     }}
                 >
                     <div className="content">
-                        <Router registerList={this.props.registerList}/>
+                        <Router registerList={this.props.registerList} />
                     </div>
+                    {
+                        this.props.modalVisible ? <BaseModal/> : ""
+                    }
                 </Content>
             </Layout>
         );
@@ -43,7 +52,7 @@ class VLayout extends React.Component<IProps, State> {
 
 const mapStateToProps = (state: any) => ({
     registerList: state.RApp.registerList,
-
+    modalVisible: state.RApp.modalVisible
 });
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
 

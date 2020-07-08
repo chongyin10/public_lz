@@ -3,9 +3,12 @@ import { Link, withRouter, RouteComponentProps, Route, Switch } from "react-rout
 import { Modal, Button } from 'antd';
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import * as Tdispatch from '@/page/redux/app';
 
 export interface IProps extends RouteComponentProps {
     modalVisible?: boolean;
+    modalOtherOption?: any;
+    personalItemKey: string;
     title?: string;
     onModalStatus(modalVisible: boolean, callback: () => void): void;
 }
@@ -14,7 +17,7 @@ interface IState {
 
 }
 
-export default (modalOtherOption?: any) => (WrappedComponent: any) => {
+export default (WrappedComponent: any) => {
     class ModelConnect extends React.Component<IProps, IState>  {
 
         handleOk = () => {
@@ -24,19 +27,27 @@ export default (modalOtherOption?: any) => (WrappedComponent: any) => {
         handleCancel = () => {
             this.props.onModalStatus(false, () => { });
         }
+
         render() {
-            console.log(this.props)
             return (
                 <Modal
-                    {...modalOtherOption}
+                    {...this.props.modalOtherOption}
                     visible={this.props.modalVisible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                 >
-                    <WrappedComponent />
+                    <WrappedComponent personalItemKey={this.props.personalItemKey} />
                 </Modal>
             )
         }
     }
-    return ModelConnect
+
+    const mapStateToProps = (state: any) => ({
+        ...state.RApp
+    });
+    const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
+        ...Tdispatch
+    }, dispatch)
+
+    return connect(mapStateToProps, mapDispatchToProps)(ModelConnect);
 }
