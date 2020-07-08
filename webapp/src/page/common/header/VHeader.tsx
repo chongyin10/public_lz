@@ -1,14 +1,18 @@
 import * as React from 'react';
 import { Link, withRouter, RouteComponentProps } from "react-router-dom";
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Dropdown, Button } from 'antd';
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+
 
 const { Header } = Layout;
 
 import LogPng from '../../static/images/logo.png';
 import { IMenu, Meuns, IApp } from '@/page/interface/app';
-import { getSubMenus, setItemOpenKey } from '@/page/redux/app';
+import { getSubMenus, setItemOpenKey, onModalStatus } from '@/page/redux/app';
+import '@/page/common/header/vheader.scss';
 
 export interface IProps extends RouteComponentProps {
     itemList?: IMenu;
@@ -16,8 +20,10 @@ export interface IProps extends RouteComponentProps {
     defaultSelectedKeys?: string;
     subItemOpenKey?: string;
     chiItemOpenKey?: string;
+    modalVisible?: boolean;
     onGetSubMenus(level: number, menuItem: number, callback: () => void): void;
     onSetItemOpenKey(itemOpenKey: string, callback: () => void): void;
+    ononModalStatus(modalVisible: boolean, callback: () => void): void;
 }
 
 interface State {
@@ -50,7 +56,7 @@ class VHeader extends React.Component<IProps, State> {
     exeMenusHtml = () => {
         let { itemList } = this.props;
         let menuItem = itemList?.map((item, index) => {
-            return <Menu.Item onClick={this.onHandlerClick.bind(this)} key={item.id}><Link to={item.url || ""}>{item.name}</Link> </Menu.Item>
+            return <Menu.Item key={index} onClick={this.onHandlerClick.bind(this)} key={item.id}><Link to={item.url || ""}>{item.name}</Link> </Menu.Item>
         })
         let { pathname } = this.props.history.location;
         let defaultSelectedKeys = undefined;
@@ -60,7 +66,28 @@ class VHeader extends React.Component<IProps, State> {
         return <Menu defaultSelectedKeys={[String(defaultSelectedKeys)]} theme="dark" mode="horizontal" >{menuItem}</Menu>;
     }
 
+    onMenuHandlerClick = ({ key }: any) => {
+        if (key !== 'login') {
+            this.props.ononModalStatus(true, () => { });
+        }
+    }
+
     render() {
+
+        const menu = (
+            <Menu onClick={this.onMenuHandlerClick}>
+                <Menu.Item key='userinfo'>
+                    <Link to="/personal/userHub">用户信息</Link>
+                </Menu.Item>
+                <Menu.Item key='settings'>
+                    <Link to="/personal/settings">settings设置</Link>
+                </Menu.Item>
+                <Menu.Item key='login'>
+                    <Link to="/login">退出</Link>
+                </Menu.Item>
+            </Menu>
+        );
+
         return (
             <Header className="header">
                 <div className="logo">
@@ -70,6 +97,14 @@ class VHeader extends React.Component<IProps, State> {
                     <span className='log-title'>众昕阅读</span>
                 </div>
                 {this.exeMenusHtml()}
+                <div className='userlogin'>
+                    <Avatar icon={<UserOutlined />} />
+                    <span className='usercore'>
+                        <Dropdown overlay={menu} placement="bottomCenter">
+                            <Button>个人中心</Button>
+                        </Dropdown>
+                    </span>
+                </div>
             </Header>
         );
     }
@@ -81,11 +116,13 @@ const mapStateToProps = (state: any) => ({
     defaultSelectedKeys: state.RApp.defaultSelectedKeys,
     subItemOpenKey: state.RApp.subItemOpenKey,
     chiItemOpenKey: state.RApp.chiItemOpenKey,
+    modalVisible: state.RApp.modalVisible,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
     onGetSubMenus: getSubMenus,
     onSetItemOpenKey: setItemOpenKey,
+    ononModalStatus: onModalStatus
 }, dispatch)
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(VHeader));
