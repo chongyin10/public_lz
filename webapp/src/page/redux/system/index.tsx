@@ -1,10 +1,10 @@
 import { get, post } from '../../utils/request';
 import _ from 'lodash';
-import { UserInfoResponse, UserInfo } from '../../interface/user';
 import { Dispatch } from 'redux';
-import { getUserInfo } from '../../constants/api';
+import { getUserInfo, getApiAll } from '../../constants/api';
 import * as T from '../../constants/actions';
 import { initState, Action } from '@/page/redux/system/state';
+import { UserInfo } from '@/page/interface/user';
 
 /**
  *  注销用户
@@ -48,6 +48,28 @@ export function getUsers(userInfo: any) {
     }
 }
 
+export function getApiList(itemid: any) {
+    return (dispatch: Dispatch) => {
+        post(getApiAll, { itemid }).then((res: any) => {
+            dispatch({
+                type: T.GET_API_LIST,
+                payload: res,
+            })
+        })
+    }
+}
+
+export function getApiByPath(path: string, user?: UserInfo) {
+    return (dispatch: Dispatch) => {
+        post('/api'+path, user).then((res: any) => {
+            dispatch({
+                type: T.GET_API_PATH_BOOLEAN,
+                payload: res,
+            })
+        })
+    }
+}
+
 export default function (state = initState, action: Action) {
     switch (action.type) {
         case T.GET_USER_INFO:
@@ -65,6 +87,16 @@ export default function (state = initState, action: Action) {
             return {
                 ...state,
                 skin: action.payload
+            }
+        case T.GET_API_LIST:
+            return {
+                ...state,
+                apiList: action.payload
+            }
+        case T.GET_API_PATH_BOOLEAN:
+            return {
+                ...state,
+                apiData: action.payload
             }
         default:
             return state

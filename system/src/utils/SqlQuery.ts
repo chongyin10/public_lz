@@ -14,6 +14,10 @@ class QuerySql {
         this.self = self;
     }
 
+    /**
+     * 纯sql语句带有where查询
+     * @param whereParam 
+     */
     querySqlAll(whereParam?: any): any {
         let sqlStr = ` select * from ${this.tabname} `;
         var whereBuffer = new StringBuffer(` where 1 = 1`);
@@ -28,6 +32,17 @@ class QuerySql {
                 type: QueryTypes.SELECT
             }
         ).then(projects => {
+            return projects
+        });
+        return obj
+    }
+
+    /**
+     * 纯sql语句查询: 此方法存在sql注入
+     * @param sql 
+     */
+    querySql(sql?: string): any {
+        let obj = this.self.sequelize.query(sql).then(projects => {
             return projects
         });
         return obj

@@ -16,3 +16,6 @@ export const getTestList = '/api/tests/getTest';
 
 // 获取注册器
 export const getRegister = '/api/item/getRegister';
+
+// 获取当前功能api接口
+export const getApiAll = '/api/apis/getApiAll';

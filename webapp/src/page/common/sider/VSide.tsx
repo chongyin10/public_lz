@@ -7,6 +7,7 @@ import { getSubMenus, setSubItemOpenKey, setChiItemOpenKey } from '@/page/redux/
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 import { IMenu, Meuns } from '@/page/interface/app';
 import { pathnameParser } from '@/page/utils/common';
+import { getApiList } from '@/page/redux/system';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
@@ -18,7 +19,8 @@ export interface IProps extends RouteComponentProps {
     chiItemOpenKey?: string;
     onGetSubMenus(level: number, menuItem: number, callback: () => void): void;
     onSetSubItemOpenKey(subItemOpenKey: string, callback: () => void): void;
-    onSetChiItemOpenKey(chiItemOpenKey: string, callback: () => void): void
+    onSetChiItemOpenKey(chiItemOpenKey: string, callback: () => void): void;
+    onGetApiList(itemid: any, callback: () => void): void;
 }
 
 interface IState {
@@ -61,6 +63,7 @@ class VSide extends React.Component<IProps, IState> {
         let { key } = obj;
         this.props.onSetChiItemOpenKey(String(key), () => { });
         window.sessionStorage.setItem("chiItemOpenKey", key);
+        this.props.onGetApiList(Number(key), () => { })
     }
 
     handleSubItemHTML = () => {
@@ -101,12 +104,14 @@ const mapStateToProps = (state: any) => ({
     subItemList: state.RApp.subItemList,
     childrenItemList: state.RApp.childrenItemList,
     subItemOpenKey: state.RApp.subItemOpenKey,
-    chiItemOpenKey: state.RApp.chiItemOpenKey
+    chiItemOpenKey: state.RApp.chiItemOpenKey,
+    
 });
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
     onGetSubMenus: getSubMenus,
     onSetSubItemOpenKey: setSubItemOpenKey,
     onSetChiItemOpenKey: setChiItemOpenKey,
+    onGetApiList: getApiList
 }, dispatch)
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(VSide));

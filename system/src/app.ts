@@ -1,12 +1,10 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as errorhandler from 'strong-error-handler';
-import { movies } from './controller/movies';
-import { actors } from './controller/actors';
-import { genres } from './controller/genre';
 import { tests } from './controller/test';
 import { items } from './controller/item';
 import { users } from './controller/users';
+import { apis } from './controller/api';
 
 export const app = express();
 
@@ -27,11 +25,9 @@ app.use((req, res, next) => {
 });
 
 app.use('/item', items)
-app.use('/movies', movies);
-app.use('/actors', actors);
-app.use('/genres', genres);
 app.use('/tests', tests);
 app.use('/users', users)
+app.use('/apis', apis)
 
 
 console.log(`@运行环境为：${process.env.NODE_ENV}`)
