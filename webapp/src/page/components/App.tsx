@@ -1,27 +1,24 @@
 import * as React from 'react';
-import { Layout, Menu } from 'antd';
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import loadable from '@loadable/component';  // 按需加载Router
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import VHeader from '@/page/common/header/VHeader';
-import VSide from '@/page/common/sider/VSide';
-import VLayout from '@/page/common/layout/VLayout';
-import VFooter from '@/page/common/footer/VFooter';
+import WebApp from '@/page/common';
+import LoginRouter from '@/page/routers/login';
 
 import { getItems, getRegisterList, getSubMenus, setChiItemOpenKey } from '@/page/redux/app';
 import { pathnameParser } from '@/page/utils/common';
 
 import './app.scss';
-
-
+import { Spin, Alert } from 'antd';
+import { UserInfo } from '../interface/user';
+import { forEach } from 'lodash';
 
 export interface IProps extends RouteComponentProps {
-    dispatch?: any;
-    onGetItems(param: number, callback: () => void): void;
-    onGetRegisterList({ }, callback: () => void): void;
-    onGetSubMenus(level: number, menuItem: number, callback: () => void): void;
+    personalItemKey?: string;
+    userInfo?: any,
+    skin?: boolean,
 }
 
 interface State {
@@ -29,40 +26,40 @@ interface State {
 class App extends React.Component<IProps, State>{
 
     componentDidMount() {
-        this.props.onGetItems(0, () => { });
-        this.props.onGetRegisterList({}, () => { });
-        let { pathname } = this.props.history.location;
-        pathnameParser(pathname)
-        let { itemOpenKey, subItemOpenKey, chiItemOpenKey } = window.sessionStorage;
-        if (itemOpenKey != null && itemOpenKey != "null") {
-            this.props.onGetSubMenus(1, itemOpenKey, () => { });
-            if (subItemOpenKey != null && subItemOpenKey != "null") {
-                this.props.onGetSubMenus(2, subItemOpenKey, () => { });
-            }
-            this.props.history.push(pathname)
+        let { sessionUserInfo } = window.sessionStorage;
+        if ( sessionUserInfo === "") {
+            this.props.history.replace('/login')
         }
     }
+
     render() {
+        let { userInfo, skin } = this.props;
+        let { sessionUserInfo } = window.sessionStorage;
+        let { pathname } = this.props.history.location;
+        // console.log('@skin:', skin)
+        if ((userInfo && userInfo.length > 0)) {
+            pathname = '/';  // 若是登录成功，重新定义路由根
+        }
         return (
-            <Layout>
-                <VHeader />
-                <Layout>
-                    <VSide />
-                    <VLayout />
-                </Layout>
-                <VFooter />
-            </Layout>
+            <Spin spinning={(false)} delay={1}>
+                <div className='_app' style={{ height: '100%', width: "100%" }}>
+                    {
+                        (pathname.indexOf('login') < 0 && sessionUserInfo != "") ? <WebApp /> : <LoginRouter />
+                    }
+                </div>
+            </Spin>
         )
     }
 }
 
 const mapStateToProps = (state: any) => ({
+    personalItemKey: state.RApp.personalItemKey,
+    userInfo: state.RSys.userInfo,
+    skin: state.RSys.skin,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
-    onGetItems: getItems,
-    onGetRegisterList: getRegisterList,
-    onGetSubMenus: getSubMenus,
+
 }, dispatch)
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

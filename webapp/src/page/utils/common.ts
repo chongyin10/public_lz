@@ -5,6 +5,9 @@
  */
 export function pathnameParser(pathname: any): void {
     let _patchItem: any = [];
+    if (pathname.indexOf('login') > 0) {
+        pathname = '/';
+    }
     let pathNameArrs = pathname.split('\/');
     pathNameArrs.forEach((item: any): any => {
         if (item && item !== '' && item != " ") {
@@ -29,9 +32,18 @@ export function setSessionStorageAsNull(): void {
 }
 
 /**
+ * 注销session值
+ */
+export function clearSeesion() {
+    window.sessionStorage.setItem('sessionUserInfo', ''); // 注销session值
+    window.sessionStorage.setItem("itemOpenKey", "null");
+    window.sessionStorage.setItem("subItemOpenKey", "null");
+    window.sessionStorage.setItem("chiItemOpenKey", "null");
+}
+
+/**
  * 数组中移除null和undefined值
  */
-
 export const removeNullAndUndefined = function (arrs: []): [] {
     let _newArrs: [] = [];
     arrs.forEach((item) => {

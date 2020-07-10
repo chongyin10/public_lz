@@ -97,6 +97,30 @@ export function getSubMenus(level: number, menuItem: number) {
         })
     }
 }
+/**
+ *  重置二级目录值
+ * @param subItemList 
+ */
+export function setSubMenus(subItemList: any) {
+    return (dispatch: Dispatch) => {
+        dispatch({
+            type: T.GET_SUB_MENUS_LIST,
+            payload: subItemList
+        })
+    }
+}
+/**
+ * 重置三级目录值
+ * @param childrenItemList 
+ */
+export function setChiItemMenus(childrenItemList: any) {
+    return (dispatch: Dispatch) => {
+        dispatch({
+            type: T.GET_CHI_MENUS_LIST,
+            payload: childrenItemList
+        })
+    }
+}
 
 /**
  * 注册器

@@ -7,7 +7,6 @@ export interface UserInfo {
     code?: number;
     username?: string;
     password?: string;
-    createdAt?: Date;
 }
 
-export type UserInfoResponse = UserInfo[] | undefined
+export type UserInfoResponse = UserInfo[] | undefined;

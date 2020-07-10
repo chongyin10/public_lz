@@ -6,13 +6,14 @@ import { connect } from 'react-redux';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
-
+import { clearSeesion } from '@/page/utils/common';
 const { Header } = Layout;
 
 import LogPng from '../../static/images/logo.png';
 import { IMenu, Meuns, IApp } from '@/page/interface/app';
-import { getSubMenus, setItemOpenKey, onModalStatus, setPersonalItemKey, onModalOption } from '@/page/redux/app';
+import { getSubMenus, setItemOpenKey, onModalStatus, setPersonalItemKey, onModalOption, setSubMenus, setChiItemMenus } from '@/page/redux/app';
 import '@/page/common/header/vheader.scss';
+import { setUsers, setSpin } from '@/page/redux/system';
 
 export interface IProps extends RouteComponentProps {
     itemList?: IMenu;
@@ -21,11 +22,16 @@ export interface IProps extends RouteComponentProps {
     subItemOpenKey?: string;
     chiItemOpenKey?: string;
     modalVisible?: boolean;
+    userInfo?: any;
     onGetSubMenus(level: number, menuItem: number, callback: () => void): void;
     onSetItemOpenKey(itemOpenKey: string, callback: () => void): void;
     onModalStatus(modalVisible: boolean, callback: () => void): void;
     onSetPersonalItemKey(personalItemKey: string, callback: () => void): void;
     onModalOption(modalOtherOption: any, callback: () => void): void;
+    onSetUsers(userInfo: any, callback: () => void): void;
+    onSetSpin(skin: boolean, callback: () => void): void;
+    onSetSubMenus(subItemList: any, callback: () => void): void;
+    onSetChiItemMenus(childrenItemList: any, callback: () => void): void
 }
 
 interface State {
@@ -58,7 +64,7 @@ class VHeader extends React.Component<IProps, State> {
     exeMenusHtml = () => {
         let { itemList } = this.props;
         let menuItem = itemList?.map((item, index) => {
-            return <Menu.Item key={index} onClick={this.onHandlerClick.bind(this)} key={item.id}><Link to={item.url || ""}>{item.name}</Link> </Menu.Item>
+            return <Menu.Item onClick={this.onHandlerClick.bind(this)} key={item.id}><Link to={item.url || ""}>{item.name}</Link> </Menu.Item>
         })
         let { pathname } = this.props.history.location;
         let defaultSelectedKeys = undefined;
@@ -69,6 +75,7 @@ class VHeader extends React.Component<IProps, State> {
     }
 
     onMenuHandlerClick = ({ key }: any) => {
+        this.props.onSetSpin(true, () => { });
         if (key !== 'login') {
             this.props.onModalStatus(true, () => { });
         }
@@ -80,13 +87,17 @@ class VHeader extends React.Component<IProps, State> {
             this.props.onModalOption({
                 title: 'settings设置'
             }, () => { })
+        } else if (key === 'login') {
+            this.props.onSetUsers([], () => { }); // 注销用户信息
+            clearSeesion();
+            this.props.onSetSubMenus([], () => { });
+            this.props.onSetChiItemMenus([], () => { });
         }
         this.props.onSetPersonalItemKey(key, () => { });
 
     }
 
     render() {
-
         const menu = (
             <Menu onClick={this.onMenuHandlerClick}>
                 <Menu.Item key='userhub'>
@@ -130,6 +141,7 @@ const mapStateToProps = (state: any) => ({
     subItemOpenKey: state.RApp.subItemOpenKey,
     chiItemOpenKey: state.RApp.chiItemOpenKey,
     modalVisible: state.RApp.modalVisible,
+    userInfo: state.RSys.userInfo
 
 });
 
@@ -138,7 +150,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
     onSetItemOpenKey: setItemOpenKey,
     onModalStatus: onModalStatus,
     onSetPersonalItemKey: setPersonalItemKey,
-    onModalOption: onModalOption
+    onModalOption: onModalOption,
+    onSetUsers: setUsers,
+    onSetSpin: setSpin,
+    onSetSubMenus: setSubMenus,
+    onSetChiItemMenus: setChiItemMenus
 }, dispatch)
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(VHeader));

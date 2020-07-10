@@ -79,10 +79,10 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                test: /\.(png|jpg|gif|svg)(\?.*)?$/,
                 use: [
                     {
-                        loader: 'url-loader',
+                        loader: 'file-loader',
                         options: {
                             //1024 == 1kb  
                             //小于10kb时打包成base64编码的图片否则单独打包成图片
@@ -131,8 +131,8 @@ module.exports = {
         alias: {
             '@': path.resolve('./src'),
             "@ant-design/icons/lib/dist$": path.resolve('./src/icons.ts'),
-            '@components': path.resolve('./src/components'),
-            '@img': path.resolve('./src/assets/img'),
+            '@components': path.resolve('./src/page/components'),
+            '@images': path.resolve('./src/page/static/images'),
             '@leafMap': path.resolve('./src/leaflet.ts')
         }
     },

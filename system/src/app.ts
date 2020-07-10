@@ -6,6 +6,7 @@ import { actors } from './controller/actors';
 import { genres } from './controller/genre';
 import { tests } from './controller/test';
 import { items } from './controller/item';
+import { users } from './controller/users';
 
 export const app = express();
 
@@ -29,7 +30,8 @@ app.use('/item', items)
 app.use('/movies', movies);
 app.use('/actors', actors);
 app.use('/genres', genres);
-app.use('/tests', tests)
+app.use('/tests', tests);
+app.use('/users', users)
 
 
 console.log(`@运行环境为：${process.env.NODE_ENV}`)

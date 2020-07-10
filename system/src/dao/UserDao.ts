@@ -7,6 +7,22 @@ export default class TestDao extends User {
             raw: true
         });
         return items;
+    };
+
+    /**
+     * 登录用户
+     * @param username 
+     * @param passwrod 
+     */
+    async getUser(username: string, passwrod: string) {
+        let user = await User.findAll({
+            where: {
+                username: String(username),
+                password: String(passwrod)
+            },
+            raw: true
+        });
+        return user;
     }
 
     async getById(id: number) {

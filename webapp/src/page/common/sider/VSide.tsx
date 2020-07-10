@@ -82,9 +82,6 @@ class VSide extends React.Component<IProps, IState> {
             defaultOpenKeys = subItemOpenKey;
             defaultSelectedKeys = chiItemOpenKey == "null" ? '0' : chiItemOpenKey;
         }
-
-        console.log(defaultSelectedKeys)
-
         return (
             <Sider width={200} className="site-layout-background">
                 <Menu

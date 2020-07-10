@@ -1,6 +1,9 @@
 
 // 获取用户类型
 export const GET_USER_INFO = 'GET_USER_INFO';
+export const SET_USER_INFO = 'SET_USER_INFO'; // 注销用户
+
+export const SKIN_BOOLEAN = 'SKIN_BOOLEAN'; // 加载值
 
 // 定义存储地图Map
 export const GET_MAP = 'GET_MAP';

@@ -2,8 +2,6 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import views from '@/page/views';
-import UserHub from '../common/personal/Userhub';
-import Settings from '../common/personal/Settings';
 
 /**
  * 
@@ -25,12 +23,6 @@ const exeRouteHtml = ({ registerList }: any) => {
             }
         }
     }
-    // routeSwitchHTML.push(
-    //     <Switch key='model'>
-    //         <Route key='userHub' path='/personal/userHub' component={UserHub}></Route>
-    //         <Route key='settings' path='/personal/settings' component={Settings}></Route>
-    //     </Switch>
-    // )
     let _r = [<Switch key="_r">{routeHTML}<Route path={'/'} ><Switch>{routeSwitchHTML}</Switch></Route></Switch>];
     return _r;
 }

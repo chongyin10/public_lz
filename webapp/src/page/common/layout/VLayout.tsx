@@ -8,12 +8,15 @@ import { withRouter } from 'react-router-dom';
 import { IMenu } from '@/page/interface/app';
 import BaseModal from '@/page/common/personal/BaseModal';
 
+import loginJpg from '@images/login_bg.jpg';
+import { url } from 'inspector';
+
 const { Content } = Layout;
 
 export interface IProps {
     registerList?: IMenu;
     modalVisible?: boolean;
-    key?:string;
+    key?: string;
 }
 
 interface State {
@@ -25,9 +28,6 @@ interface State {
 @withRouter
 class VLayout extends React.Component<IProps, State> {
     render() {
-    
-        let key = "userhub";
-
         return (
             <Layout style={{ padding: '0 24px 24px' }}>
                 <Content
@@ -42,7 +42,7 @@ class VLayout extends React.Component<IProps, State> {
                         <Router registerList={this.props.registerList} />
                     </div>
                     {
-                        this.props.modalVisible ? <BaseModal/> : ""
+                        this.props.modalVisible ? <BaseModal /> : ""
                     }
                 </Content>
             </Layout>

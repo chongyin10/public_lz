@@ -1,7 +1,9 @@
 import { Model, Column, Table, PrimaryKey, AutoIncrement } from "sequelize-typescript";
 
 @Table({
-    tableName: 'user'
+    tableName: 'user',
+    timestamps: false,
+    freezeTableName: true
 })
 export class User extends Model<User> {
 
@@ -11,7 +13,16 @@ export class User extends Model<User> {
     id!: number;
 
     @Column
-    name?: string;
+    username?: string;
+
+    @Column
+    password?: string;
+
+    @Column
+    code?: string;
+
+    @Column
+    loginTime?: Date
 
 }
 

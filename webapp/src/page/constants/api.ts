@@ -6,7 +6,7 @@
 export const getBookInfo = '/api/book/getBookInfo';
 
 // 获取用户信息
-export const getUserInfo = '/api/user/getUserInfo';
+export const getUserInfo = '/api/users/getUserInfo';
 
 // 获取菜单信息
 export const getMenuList = '/api/item/getMenus';
