@@ -28,7 +28,7 @@ class AppMap extends React.Component<IAppProps, State> {
 
     render() {
         return (
-            <div id='map' style={{ height: '465px', width: 'auto' }}></div>
+            <div id='map' style={{ height: window.innerHeight, width: 'auto' }}></div>
         );
     }
 }

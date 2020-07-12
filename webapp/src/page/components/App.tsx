@@ -42,7 +42,7 @@ class App extends React.Component<IProps, State>{
         }
         return (
             <Spin spinning={(false)} delay={1}>
-                <div className='_app' style={{ height: '100%', width: "100%" }}>
+                <div className='_app' style={{ width: "100%", height: window.innerHeight }}>
                     {
                         (pathname.indexOf('login') < 0 && sessionUserInfo != "") ? <WebApp /> : <LoginRouter />
                     }

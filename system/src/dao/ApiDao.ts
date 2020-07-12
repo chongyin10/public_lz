@@ -9,7 +9,7 @@ export default class ApiDao extends Api {
      */
     async getApiByItemid(itemid?: number) {
         let sql = 'SELECT a.* FROM api AS a, item AS i WHERE a.itemid=i.id AND a.itemid=?';
-        let api = this.sequelize.query(sql, {
+        let api = await this.sequelize.query(sql, {
             replacements: [itemid],
             type: QueryTypes.SELECT
         }).then(projects => {
