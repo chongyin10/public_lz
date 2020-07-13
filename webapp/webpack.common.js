@@ -1,24 +1,9 @@
 const path = require('path');
 const SRC_PATH = path.join(__dirname, './src');
 const theme = require('./theme.js');
-const argv = require('yargs-parser')(process.argv.slice(4))
-console.log(`argv:${argv}`)
-const APP_ENV = argv.env || 'dev'
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-const env = require('./config/env.json')
-
-const oriEnv = env[APP_ENV]
-Object.assign(oriEnv, {
-    APP_ENV: APP_ENV
-})
-console.log(`当前启动环境：${APP_ENV}`);
-
-const defineEnv = {}
-for (let key in oriEnv) {
-    defineEnv[`process.env.${key}`] = JSON.stringify(oriEnv[key])
-    console.log(`process.env.${key}`)
-}
+const { APP_ENV } = require('./config/env.js');
 
 module.exports = {
     entry: {

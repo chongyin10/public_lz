@@ -22,7 +22,7 @@ class User extends React.Component<IProps, IState> {
         if (apiList?.length > 0) {
             for (let api of apiList) {
                 if (api.itemid == chiItemOpenKey && api.type === 0) {
-                    debugger
+                    console.log(process.env.http_env)
                     this.props.onGetApiByPath(api.path);
                 }
             }

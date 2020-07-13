@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const path = require('path')
+const { APP_ENV, API_BASEURL, PROBASE } = require('../config/env.js');
 
 const devConfig = {
 
@@ -25,6 +26,11 @@ const devConfig = {
             filename: "[name].[hash].css",
             chunkFilename: "[id].[hash].css",
         }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'http_env': JSON.stringify(APP_ENV)
+            }
+        })
     ],
 
     devServer: {
@@ -40,10 +46,10 @@ const devConfig = {
         hot: true,
         proxy: {
             '/api': {
-                target: 'http://127.0.0.1:8080/',
+                target: API_BASEURL,
                 ws: true,
                 changeOrigin: true,
-                pathRewrite: {'^/api' : '/'}
+                pathRewrite: { '^/api': '/' }
             }
         }
     },

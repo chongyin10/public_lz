@@ -14,16 +14,16 @@
 -- 导出  表 koa.api 结构
 CREATE TABLE IF NOT EXISTS `api` (
   `id` int NOT NULL,
-  `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '接口名称',
-  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '接口地址',
+  `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '接口名称',
+  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '接口地址',
   `itemid` int DEFAULT NULL,
   `type` int DEFAULT NULL COMMENT '类型：0：查询；1：新增；2：修改；3：删除',
   `createTime` date DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='接口表';
 
--- 正在导出表  koa.api 的数据：~0 rows (大约)
+-- 正在导出表  koa.api 的数据：~4 rows (大约)
 /*!40000 ALTER TABLE `api` DISABLE KEYS */;
 INSERT INTO `api` (`id`, `code`, `name`, `path`, `itemid`, `type`, `createTime`) VALUES
 	(1, '1', '获取所有用户信息', '/users/getUserAll', 6, 0, '2020-07-10'),
@@ -35,13 +35,13 @@ INSERT INTO `api` (`id`, `code`, `name`, `path`, `itemid`, `type`, `createTime`)
 -- 导出  表 koa.item 结构
 CREATE TABLE IF NOT EXISTS `item` (
   `id` int NOT NULL,
-  `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '业务code',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '名称',
+  `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '业务code',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '名称',
   `weight` int DEFAULT NULL COMMENT '权重',
   `level` int DEFAULT NULL COMMENT '级别：0：根，1：一级目录，2：二级目录，3：三级目录',
-  `autoType` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '0：系统添加菜单，1：手动录入菜单',
-  `url` varchar(255) DEFAULT NULL,
-  `register` varchar(255) DEFAULT NULL COMMENT '注册：必须和前端新view形成唯一性',
+  `autoType` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '0：系统添加菜单，1：手动录入菜单',
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `register` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '注册：必须和前端新view形成唯一性',
   `enable` int DEFAULT NULL COMMENT '是否启用：0：启用；1：禁用',
   `menuItem` int DEFAULT NULL COMMENT '上级目录id',
   PRIMARY KEY (`id`)
@@ -68,7 +68,7 @@ INSERT INTO `item` (`id`, `code`, `name`, `weight`, `level`, `autoType`, `url`, 
 -- 导出  表 koa.test 结构
 CREATE TABLE IF NOT EXISTS `test` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -83,14 +83,14 @@ INSERT INTO `test` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
 -- 导出  表 koa.user 结构
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `code` varchar(32) DEFAULT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `loginTime` date DEFAULT NULL COMMENT '最后一次登录时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 正在导出表  koa.user 的数据：~0 rows (大约)
+-- 正在导出表  koa.user 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `password`, `code`, `loginTime`) VALUES
 	(1, 'chongyin', '1', '1', '2020-07-09');
