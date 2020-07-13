@@ -12,9 +12,9 @@ let itemService = new ItemService();
 items.get(API.getMenus, async (req, res, next) => {
     try {
         if (req.query['menuItem']) {
-            res.json(await itemService.getSubItem(req.query['level'], req.query['menuItem']));
+            res.json(await itemService.getSubItem(Number(req.query['level']), Number(req.query['menuItem'])));
         } else {
-            res.json(await itemService.getItem(req.query['level']));
+            res.json(await itemService.getItem(Number(req.query['level'])));
         }
 
     } catch (e) {

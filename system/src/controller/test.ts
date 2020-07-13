@@ -7,7 +7,7 @@ let testService = new TestService();
 
 tests.get(API._id, async (req, res, next) => {
 	try {
-		res.json(await testService.getById(req.params['id']));
+		res.json(await testService.getById(Number(req.params['id'])));
 	} catch (e) {
 		next(e);
 	}
