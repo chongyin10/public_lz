@@ -2,10 +2,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as errorhandler from 'strong-error-handler';
 
-import { tests } from './controller/test';
-import { items } from './controller/item';
-import { users } from './controller/users';
-import { apis } from './controller/api';
+import { test_R } from './controller/test';
 
 export const app = express();
 
@@ -26,11 +23,7 @@ app.use(async (req, res, next) => {
     await next();
 });
 
-app.use('/item', items)
-app.use('/tests', tests);
-app.use('/users', users)
-app.use('/apis', apis)
-
+app.use('/test', test_R);
 
 console.log(`@运行环境为：${process.env.NODE_ENV}`)
 

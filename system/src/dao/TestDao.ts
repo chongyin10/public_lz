@@ -3,14 +3,9 @@ import SqlQuery from '../utils/SqlQuery';
 
 export default class TestDao extends Test {
 
-    async getList() {
+    async getTestList() {
         let query = new SqlQuery("test", this);
         let items = await query.querySqlAll({ id: 1 });
         return items;
-    }
-
-    async getById(id: number) {
-        let item = await Test.findByPk(id)
-        return item
     }
 }

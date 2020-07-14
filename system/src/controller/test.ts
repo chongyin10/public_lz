@@ -1,24 +1,14 @@
 import { Router } from 'express';
 import TestService from '../service/TestService';
-import * as API from '../config/apis';
+import * as API from '../config/api';
 
-export const tests = Router();
+export const test_R = Router();
 let testService = new TestService();
 
-tests.get(API._id, async (req, res, next) => {
+test_R.get(API.getTestList, async (req, res, next) => {
 	try {
-		res.json(await testService.getById(Number(req.params['id'])));
+		res.json(await testService.getTestList());
 	} catch (e) {
 		next(e);
 	}
 });
-
-tests.get(API.getTest, async (req, res, next) => {
-	try {
-		res.json(await testService.getByAll());
-	} catch (e) {
-		next(e);
-	}
-});
-
-

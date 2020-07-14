@@ -1,7 +1,9 @@
 import { Model, Column, Table, PrimaryKey, AutoIncrement } from "sequelize-typescript";
 
 @Table({
-    tableName: 'test'
+    tableName: 'test',
+    timestamps: false,
+    freezeTableName: true
 })
 export class Test extends Model<Test> {
 
