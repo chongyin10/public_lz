@@ -53,18 +53,18 @@ export function getApiList(itemid: any) {
         post(getApiAll, { itemid }).then((res: any) => {
             dispatch({
                 type: T.GET_API_LIST,
-                payload: res,
+                payload: JSON.stringify(res?.length > 0 ? res : undefined)
             })
         })
     }
 }
 
-export function getApiByPath(path: string, user?: UserInfo) {
+export function getApiByPath(path: string, user?: any) {
     return (dispatch: Dispatch) => {
-        post('/api'+path, user).then((res: any) => {
+        post(path, { param: user }).then((res: any) => {
             dispatch({
-                type: T.GET_API_PATH_BOOLEAN,
-                payload: res,
+                type: T.GET_USER_ALL,
+                payload: JSON.stringify(res?.length > 0 ? res : undefined),
             })
         })
     }
@@ -93,7 +93,7 @@ export default function (state = initState, action: Action) {
                 ...state,
                 apiList: action.payload
             }
-        case T.GET_API_PATH_BOOLEAN:
+        case T.GET_USER_ALL:
             return {
                 ...state,
                 apiData: action.payload

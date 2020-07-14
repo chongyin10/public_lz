@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `item` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 正在导出表  koa.item 的数据：~12 rows (大约)
+-- 正在导出表  koa.item 的数据：~13 rows (大约)
 /*!40000 ALTER TABLE `item` DISABLE KEYS */;
 INSERT INTO `item` (`id`, `code`, `name`, `weight`, `level`, `autoType`, `url`, `register`, `enable`, `menuItem`) VALUES
 	(1, '1', '系统管理', 0, 0, '0', '/system', 'system', 0, 0),
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `test` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 正在导出表  koa.test 的数据：~0 rows (大约)
+-- 正在导出表  koa.test 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `test` DISABLE KEYS */;
 INSERT INTO `test` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
 	(1, 'chongyin', '2020-06-29 16:22:53', '2020-06-29 16:22:54');

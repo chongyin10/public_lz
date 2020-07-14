@@ -13,5 +13,6 @@ console.log(`当前启动环境：${APP_ENV}`);
 
 module.exports = {
     APP_ENV,
-    API_BASEURL: oriEnv["BASEURL"]
+    API_BASEURL: oriEnv["BASEURL"],
+    API_PROBASE: oriEnv["PROBASE"]
 }

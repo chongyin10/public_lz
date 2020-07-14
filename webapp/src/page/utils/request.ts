@@ -7,13 +7,17 @@
  * @FilePath: /stc_fe/src/utils/request.ts
  */
 import originAxios from 'axios';
-import { message } from 'antd';
-import { string } from 'prop-types';
+import { message, Spin } from 'antd';
 import qs from 'qs';
 
 const axios = originAxios.create({
     timeout: 20000
 });
+
+axios.defaults.withCredentials = true;
+axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+axios.defaults.withCredentials = true;  //设置cross跨域 并设置访问权限 允许跨域携带cookie信息
+axios.defaults.headers.common['Authorization'] = ''; // 设置请求头为 Authorization
 
 axios.interceptors.response.use(
     function (response) {
@@ -30,7 +34,7 @@ axios.interceptors.response.use(
 );
 
 export function get(url: string, data: any) {
-    return axios.get(url, {
+    return axios.get(process.env.http_api + url, {
         params: data
     });
 };
@@ -39,8 +43,12 @@ export function get(url: string, data: any) {
 export function post(url: string, data: any) {
     return axios({
         method: 'post',
-        url,
-        data: qs.stringify(data)
+        url: process.env.http_api + url,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data: qs.stringify(data),
+        withCredentials: true
     });
 };
 
@@ -54,7 +62,8 @@ export function put(url: string, data: any) {
 export function del(url: string, data: any) {
     return axios({
         method: 'delete',
-        url: `${url}/${data && data.id}`,
+        url: `${process.env.http_api + url}/${data && data.id}`,
+        withCredentials: true
     });
 };
 

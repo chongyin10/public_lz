@@ -1,4 +1,5 @@
 import { User } from '../models/User';
+import QuerySql from '../utils/SqlQuery';
 
 export default class TestDao extends User {
 
@@ -22,6 +23,16 @@ export default class TestDao extends User {
             },
             raw: true
         });
+        return user;
+    }
+
+    /**
+     * 查询所有数据
+     * @param param 
+     */
+    async getUserAll(param: any) {
+        let querySql = new QuerySql('user', this);
+        let user: any = querySql.querySqlAll(param)
         return user;
     }
 

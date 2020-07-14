@@ -7,13 +7,8 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import WebApp from '@/page/common';
 import LoginRouter from '@/page/routers/login';
 
-import { getItems, getRegisterList, getSubMenus, setChiItemOpenKey } from '@/page/redux/app';
-import { pathnameParser } from '@/page/utils/common';
-
 import './app.scss';
 import { Spin, Alert } from 'antd';
-import { UserInfo } from '../interface/user';
-import { forEach } from 'lodash';
 
 export interface IProps extends RouteComponentProps {
     personalItemKey?: string;
@@ -27,7 +22,7 @@ class App extends React.Component<IProps, State>{
 
     componentDidMount() {
         let { sessionUserInfo } = window.sessionStorage;
-        if ( sessionUserInfo === "") {
+        if (sessionUserInfo === "") {
             this.props.history.replace('/login')
         }
     }

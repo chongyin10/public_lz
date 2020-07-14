@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as errorhandler from 'strong-error-handler';
+
 import { tests } from './controller/test';
 import { items } from './controller/item';
 import { users } from './controller/users';
@@ -15,13 +16,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: '5mb' }));
 
 // enable corse for all origins
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
+    res.set('Access-Control-Allow-Credentials', "true");
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Expose-Headers", "x-total-count");
     res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH");
     res.header("Access-Control-Allow-Headers", "Content-Type,authorization");
-
-    next();
+    res.setHeader("Content-Type", "application/x-www-form-urlencoded")
+    await next();
 });
 
 app.use('/item', items)

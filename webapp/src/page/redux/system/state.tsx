@@ -13,7 +13,7 @@ export const initState: State = {
     userList: [],
     userInfo: [],
     skin: false,
-    apiList: [],
+    apiList: {},
     apiData: []
 }
 // 定义payload：Action

@@ -1,15 +1,14 @@
 import * as React from 'react';
-import { Link, withRouter, RouteComponentProps, Route, Switch } from "react-router-dom";
 import { Modal, Table, Space, Tag } from 'antd';
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getApiByPath } from '@/page/redux/system';
-import { UserInfo } from '@/page/interface/user';
 
 export interface IProps {
     apiList?: any;
     chiItemOpenKey?: string;
-    onGetApiByPath(path: string, user?: UserInfo, callback?: () => void): void
+    apiData?: any;
+    onGetApiByPath(path: string, user?: any, callback?: () => void): void
 }
 interface IState {
 
@@ -17,21 +16,23 @@ interface IState {
 
 class User extends React.Component<IProps, IState> {
 
-    componentDidUpdate() {
-        let { apiList, chiItemOpenKey } = this.props;
-        if (apiList?.length > 0) {
-            for (let api of apiList) {
-                if (api.itemid == chiItemOpenKey && api.type === 0) {
-                    console.log(process.env.http_env)
-                    this.props.onGetApiByPath(api.path);
+    componentWillUpdate() {
+        let { apiList, chiItemOpenKey, apiData } = this.props;
+        if (typeof apiList === 'string') {
+            let _apiList = JSON.parse(apiList);
+            if (_apiList?.length > 0) {
+                for (let api of _apiList) {
+                    if (api.itemid == chiItemOpenKey && api.type === 0) {
+                        this.props.onGetApiByPath(api.path, {}, () => { });
+                    }
                 }
             }
-            //this.props.onGetApiByPath()
         }
+        console.log('@apiList', apiList)
     }
 
     render() {
-
+        // console.log(this.props.apiData)
         const columns = [
             {
                 title: 'Name',
@@ -114,6 +115,7 @@ class User extends React.Component<IProps, IState> {
 const mapStateToProps = (state: any) => ({
     apiList: state.RSys.apiList,
     chiItemOpenKey: state.RApp.chiItemOpenKey,
+    apiData: state.RSys.apiData,
 });
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
     onGetApiByPath: getApiByPath

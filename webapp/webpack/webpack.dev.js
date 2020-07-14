@@ -5,7 +5,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const path = require('path')
-const { APP_ENV, API_BASEURL, PROBASE } = require('../config/env.js');
+const { APP_ENV, API_BASEURL, API_PROBASE } = require('../config/env.js');
+
+console.log('@API_PROBASE:', API_PROBASE)
 
 const devConfig = {
 
@@ -28,7 +30,8 @@ const devConfig = {
         }),
         new webpack.DefinePlugin({
             'process.env': {
-                'http_env': JSON.stringify(APP_ENV)
+                'http_env': JSON.stringify(APP_ENV),
+                'http_api': JSON.stringify(API_PROBASE)
             }
         })
     ],
@@ -45,11 +48,15 @@ const devConfig = {
         },
         hot: true,
         proxy: {
-            '/api': {
+            [API_PROBASE]: {
                 target: API_BASEURL,
                 ws: true,
                 changeOrigin: true,
-                pathRewrite: { '^/api': '/' }
+                pathRewrite: { ['^' + API_PROBASE]: '/' },
+                onProxyRes: function (proxyRes, req, res) {
+                    var cookies = proxyRes.headers['set-cookie'];
+                    console.log('cookies:', proxyRes.headers)
+                }
             }
         }
     },

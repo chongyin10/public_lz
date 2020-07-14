@@ -17,7 +17,7 @@ users.post(API.getUserInfo, async (req, res, next) => {
 
 users.post(API.getUserAll, async (req, res, next) => {
     try {
-
+        res.json(await userService.getUserAll(req.body['param']));
     } catch (e) {
         next(e);
     }

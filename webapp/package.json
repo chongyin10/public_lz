@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack/webpack.prod.js  --env prod --mode production",
-    "dev": "webpack-dev-server --config webpack/webpack.dev.js --env dev --mode development --inline --content-base . --history-api-fallback --inline --content-base . --history-api-fallback --host 0.0.0.0",
+    "dev": "webpack-dev-server --config webpack/webpack.dev.js --env dev --mode development --inline --content-base . --history-api-fallback --host 0.0.0.0",
     "dll": "webpack --config webpack/webpack.dll.js",
     "dll-build": "concurrently \"npm run dll\" \"npm run build\"",
     "test-build": "webpack --config webpack/webpack.prod.js --mode production --env test",

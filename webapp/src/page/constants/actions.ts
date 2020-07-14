@@ -33,5 +33,6 @@ export const SET_MODAL_OPTION = 'SET_MODAL_OPTION';
 export const SET_PERSONAL_ITEM_KEY = 'SET_PERSONAL_ITEM_KEY';
 
 export const GET_API_LIST = 'GET_API_LIST'; // 获取当前功能api接口
-export const GET_API_PATH_BOOLEAN = 'GET_API_PATH_BOOLEAN'
+export const GET_API_PATH_BOOLEAN = 'GET_API_PATH_BOOLEAN';
+export const GET_USER_ALL = 'GET_USER_ALL'
 

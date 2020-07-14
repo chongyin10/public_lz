@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Link, withRouter, RouteComponentProps } from "react-router-dom";
-import { Layout, Menu, Dropdown, Button } from 'antd';
+import { Layout, Menu, Dropdown, Button, Avatar } from 'antd';
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 import { clearSeesion } from '@/page/utils/common';
