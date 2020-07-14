@@ -1,33 +1,20 @@
 import { get, del } from '../../utils/request';
-import _ from 'lodash';
-import { TestInfoResponse, TestInfo } from '../../interface/test';
+import * as T from '@/page/constants/actions';
+import { initState, Action } from '@/page/redux/test/state';
 import { Dispatch } from 'redux';
-import { getTestList } from '../../constants/api';
-import { GET_TEST } from '../../constants/actions';
+import * as Api from '@/page/constants/api';
 
-// 定义类型
-type State = {
-    testList: TestInfoResponse
-}
-// 初始化test
-const initState: State = {
-    testList: []
-}
-// 定义payload：Action
-type Action = {
-    type: string;
-    payload: any;
-}
+import { TestEntityList, TestEntity } from "@/page/interface/test"
 
 /**
  * 获取用户
  * @param param 
  */
-export function getTest(param: TestInfo) {
+export function getTestList(testList: TestEntity) {
     return (dispatch: Dispatch) => {
-        get(getTestList, param).then((res: any) => {
+        get(Api.getTestList, testList).then((res: any) => {
             dispatch({
-                type: GET_TEST,
+                type: T.GET_TEST_LIST,
                 payload: res.data
             })
         })
@@ -36,11 +23,10 @@ export function getTest(param: TestInfo) {
 
 export default function (state = initState, action: Action) {
     switch (action.type) {
-        case GET_TEST:
-            let data = action.payload
+        case T.GET_TEST_LIST:
             return {
                 ...state,
-                userList: data
+                testList: action.payload
             }
         default:
             return state

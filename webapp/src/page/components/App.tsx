@@ -4,21 +4,13 @@ import { connect } from 'react-redux';
 import loadable from '@loadable/component';  // 按需加载Router
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import WebApp from '@/page/common';
-import LoginRouter from '@/page/routers/login';
-
-import './app.scss';
-import { Spin, Alert } from 'antd';
-
 export interface IProps extends RouteComponentProps {
-    personalItemKey?: string;
-    userInfo?: any,
-    skin?: boolean,
+
 }
 
-interface State {
+interface IState {
 }
-class App extends React.Component<IProps, State>{
+class App extends React.Component<IProps, IState>{
 
     componentDidMount() {
         let { sessionUserInfo } = window.sessionStorage;
@@ -28,29 +20,16 @@ class App extends React.Component<IProps, State>{
     }
 
     render() {
-        let { userInfo, skin } = this.props;
-        let { sessionUserInfo } = window.sessionStorage;
-        let { pathname } = this.props.history.location;
-        // console.log('@skin:', skin)
-        if ((userInfo && userInfo.length > 0)) {
-            pathname = '/';  // 若是登录成功，重新定义路由根
-        }
         return (
-            <Spin spinning={(false)} delay={1}>
-                <div className='_app' style={{ width: "100%", height: window.innerHeight }}>
-                    {
-                        (pathname.indexOf('login') < 0 && sessionUserInfo != "") ? <WebApp /> : <LoginRouter />
-                    }
-                </div>
-            </Spin>
+            <div>
+                测试App
+            </div>
         )
     }
 }
 
 const mapStateToProps = (state: any) => ({
-    personalItemKey: state.RApp.personalItemKey,
-    userInfo: state.RSys.userInfo,
-    skin: state.RSys.skin,
+
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
