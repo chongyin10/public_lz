@@ -38,7 +38,7 @@ const devConfig = {
 
     devServer: {
         contentBase: path.resolve(__dirname, '../dist'),
-        // host: 'localhost',
+        host: '0.0.0.0',
         port: 3000,
         inline: true,
         historyApiFallback: true,
@@ -50,12 +50,13 @@ const devConfig = {
         proxy: {
             [API_PROBASE]: {
                 target: API_BASEURL,
-                ws: true,
+                // ws: true,
                 changeOrigin: true,
+                secure: false,
                 pathRewrite: { ['^' + API_PROBASE]: '/' },
                 onProxyRes: function (proxyRes, req, res) {
                     var cookies = proxyRes.headers['set-cookie'];
-                    console.log('cookies:', proxyRes.headers)
+                    console.log('@cookies:', cookies)
                 }
             }
         }

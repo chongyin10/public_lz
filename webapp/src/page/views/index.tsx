@@ -1,5 +1,5 @@
 // 地图管理
-import App from '@/page/components/App';
+import App from '@/page/components';
 
 /**
  * view视图注册器

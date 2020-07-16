@@ -15,9 +15,11 @@ const axios = originAxios.create({
 });
 
 axios.defaults.withCredentials = true;  //设置cross跨域 并设置访问权限 允许跨域携带cookie信息
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 axios.interceptors.response.use(
     function (response) {
+        let status = response.data;
         if (response.data && response.data.flag === 1) {
             let errorMsg = response.data.msg;
             message.error(errorMsg);
@@ -29,6 +31,22 @@ axios.interceptors.response.use(
         return Promise.reject(error);
     }
 );
+
+axios.interceptors.request.use(function (config) {
+    if (config.method === 'post') {
+        let data = qs.parse(config.data)
+        config.data = qs.stringify({
+            ...data,
+        })
+    } else if (config.method === 'get') {
+        config.params = {
+            ...config.params,
+        }
+    }
+    return config;
+}, function (error) {
+    return Promise.reject(error);
+})
 
 export function get(url: string, data: any) {
     return axios.get(process.env.http_api + url, {
@@ -45,7 +63,7 @@ export function post(url: string, data: any) {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         data: qs.stringify(data),
-        withCredentials: true
+        withCredentials: true,
     });
 };
 

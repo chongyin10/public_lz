@@ -1,25 +1,11 @@
-import React from "react";
+import Footer from '@/page/common/footer';
+import Content from '@/page/common/content';
+import Header from '@/page/common/header';
+import Sider from '@/page/common/sider';
 
-export interface IndexProps {
-
+export {
+    Footer,
+    Content,
+    Header,
+    Sider
 }
-
-export interface IndexState {
-
-}
-
-class Index extends React.Component<IndexProps, IndexState> {
-    constructor(props: IndexProps) {
-        super(props);
-        this.state = {};
-    }
-    render() {
-        return (
-            <div>
-
-            </div>
-        );
-    }
-}
-
-export default Index;
