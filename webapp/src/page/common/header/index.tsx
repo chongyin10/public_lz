@@ -10,7 +10,10 @@ import { compose } from "redux";
 const { Header } = Layout;
 
 export interface HeaderProps {
+    perItem?: any[];
+    moduleList?: any;
     initLoginUser(callback: () => void): void;
+    moudleKeyAll(moudleKeyAll: any, callback: () => void): void;
 }
 
 export interface HeaderState {
@@ -18,10 +21,6 @@ export interface HeaderState {
 }
 
 class VHeader extends React.Component<HeaderProps, HeaderState> {
-    constructor(props: HeaderProps) {
-        super(props);
-        this.state = {};
-    }
 
     exeHanderClick = ({ key, keypatch }: any) => {
         let { location, history }: any = this.props;
@@ -31,22 +30,34 @@ class VHeader extends React.Component<HeaderProps, HeaderState> {
         }
     }
 
-    render() {
+    onHandlerClick = ({ key }: any) => {
+        this.props.moudleKeyAll({ oneLevelKey: key }, () => { })
+    }
 
-        const menu = (
-            <Menu onClick={this.exeHanderClick.bind(this)}>
-                <Menu.Item key='userinfo'>
-                    <span>用户信息</span>
-                </Menu.Item>
-                <Menu.Item key='settings'>
-                    <span>setting</span>
-                </Menu.Item>
-                <hr />
-                <Menu.Item key='login' icon={<LogoutOutlined />}>
-                    <span>退出</span>
-                </Menu.Item>
-            </Menu>
-        );
+    overlayMenu = () => {
+        let { perItem } = this.props;
+        let chiItems = [];
+        if (perItem && perItem.length > 0) {
+            for (let pre of perItem) {
+                chiItems.push(<Menu.Item key={pre['key']}><span>{pre['title']}</span></Menu.Item>)
+                if (pre['hrBottom']) {
+                    chiItems.push(<hr key='hr' />);
+                }
+            }
+        }
+        return (<Menu key='chiItems' onClick={this.exeHanderClick.bind(this)}>{chiItems}</Menu>)
+    }
+
+    htmlMenu = () => {
+        let { moduleList } = this.props;
+        let moduleArray = [];
+        for (let module of moduleList) {
+            moduleArray.push(<Menu.Item key={module['identification']}>{module['name']}</Menu.Item>);
+        }
+        return (<Menu key='dark' theme="dark" mode="horizontal" onClick={this.onHandlerClick.bind(this)}>{moduleArray}</Menu>)
+    }
+
+    render() {
 
         return (
             <Header className="header">
@@ -56,14 +67,11 @@ class VHeader extends React.Component<HeaderProps, HeaderState> {
                 <div className='top-title'>
                     <span className='log-title'>众昕阅读</span>
                 </div>
-                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
-                    <Menu.Item key="1">系统管理</Menu.Item>
-                    <Menu.Item key="2">书籍管理</Menu.Item>
-                </Menu>
+                {this.htmlMenu()}
                 <div className='userlogin'>
                     <Avatar icon={<UserOutlined />} />
                     <span className='usercore'>
-                        <Dropdown overlay={menu} placement="bottomCenter">
+                        <Dropdown overlay={this.overlayMenu} placement="bottomCenter">
                             <Button>个人中心</Button>
                         </Dropdown>
                     </span>

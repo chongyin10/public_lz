@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Switch, withRouter, Route, Redirect } from "re
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as TestDispatch from '@/page/redux/test';
 import * as LoginDispatch from '@/page/redux/login';
 import * as ComDispatch from '@/page/redux/common';
 
@@ -49,12 +48,11 @@ class RootRouter extends React.Component<RootRouterProps, RootRouterState> {
 }
 
 const mapStateToProps = (state: any) => ({
-    login: state.RLogin.login,
-    loading: state.RCom.loading
+    ...state.RLogin,
+    ...state.RCom,
 });
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
     ...LoginDispatch,
-    ...TestDispatch,
     ...ComDispatch,
 }, dispatch)
 

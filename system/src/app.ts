@@ -7,6 +7,7 @@ import cookieParser = require('cookie-parser');
 
 import { test_R } from './controller/test';
 import { login } from './controller/login';
+import { module } from './controller/module';
 
 export const app = express();
 app.use(httpLogger);
@@ -33,12 +34,13 @@ app.use(async (req, res: any, next) => {
  * 做权限拦截器使用
  */
 app.all('*', async function (req, res, next) {
-    console.log('@cookie值：',req.headers.cookie)
+    console.log('@cookie值：', req.headers.cookie)
     await next();
 })
 
 app.use('/test', test_R);
 app.use('/login', login);
+app.use('/module', module)
 
 console.log(`@运行环境为：${process.env.NODE_ENV}`)
 

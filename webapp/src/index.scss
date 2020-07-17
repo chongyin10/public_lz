@@ -16,6 +16,7 @@
   height: 100% !important;
 }
 
-.ant-spin-container {
-  // height: 1000px;
+.ant-layout .ant-layout-has-sider {
+   min-height: none !important;
+   height: auto !important;
 }

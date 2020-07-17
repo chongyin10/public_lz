@@ -6,3 +6,5 @@
 export const getTestList = '/test/getTestList';
 
 export const getLoginUser = '/login/getUser';
+
+export const getModuleList = '/module/getModuleAll'; // 加载对应的模块

@@ -1,6 +1,7 @@
 import Test from '@/page/components/test';
 import Login from '@/page/components/login';
 import App from '@/page/components';
+
 /**
  * 参数注解：[path:路径，name: 别名，component: 组件，auth: 是否使用拦截器拦截]
  */

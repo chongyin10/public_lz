@@ -7,6 +7,7 @@ import '@/page/components/index.scss';
 export interface IProps {
     loading?: Boolean;
     setLoading(loading: Boolean, callback: () => void): void;
+    getModules(callback: () => void): void;
 }
 
 export interface IState {
@@ -21,11 +22,12 @@ class App extends React.Component<IProps, IState> {
 
     async componentDidMount() {
         await this.props.setLoading(false, () => { });
+        await this.props.getModules(() => { })
     }
 
     render() {
         return (
-            <Spin spinning={Boolean(false)} tip="Loading...">
+            <Spin spinning={Boolean(this.props.loading)} tip="Loading...">
                 <div style={{ height: window.innerHeight }}>
                     <Layout>
                         <Header {...this.props} />
