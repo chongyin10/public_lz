@@ -1,12 +1,17 @@
 import React from "react";
 import { Layout, Menu } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import { Link, NavLink } from "react-router-dom";
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 export interface SiderProps {
     moduleList?: any;
-    moudleKey?: any;
+    oneLevelKey?: any;
+    twoLevelKey?: string;
+    threeLevelKey?: string;
+    twoLevelKeyFun(twoLevelKey: any, callback: () => void): void;
+    threeLevelKeyFun(threeLevelKey: any, callback: () => void): void;
 }
 
 export interface SiderState {
@@ -26,29 +31,31 @@ class VSider extends React.Component<SiderProps, SiderState> {
     onHandlerClick = ({ keyPath, key }: any) => {
         this.setState({
             defaultSelectedKeys: String(key),
+        });
+        this.props.threeLevelKeyFun(key, () => { })
 
-        })
     }
 
     onHandlerTitleClick = ({ key }: any) => {
         this.setState({
             defaultOpenKeys: String(key)
         })
+        this.props.twoLevelKeyFun(key, () => { })
     }
 
     htmlSiderMenu = () => {
-        let { moduleList, moudleKey } = this.props;
+        let { moduleList, oneLevelKey } = this.props;
         let sideMenuArrays = [];
-        if (moudleKey) {
+        if (oneLevelKey) {
             for (let moudle of moduleList) {
-                if (moudle['identification'] === moudleKey["oneLevelKey"]) {
+                if (moudle['identification'] === oneLevelKey) {
                     let chiMoudle = moudle['children'];
                     for (let chiM of chiMoudle) {
                         sideMenuArrays.push(<SubMenu key={chiM['identification']} onTitleClick={this.onHandlerTitleClick.bind(this)} title={chiM['name']}>
                             {
                                 chiM["children"].map((item: any, index: number) => {
                                     return (
-                                        <Menu.Item key={item['identification']}>{item['name']}</Menu.Item>
+                                        <Menu.Item key={item['identification']}><NavLink to={item['url']} >{item['name']}</NavLink ></Menu.Item>
                                     )
                                 })
                             }
@@ -62,12 +69,12 @@ class VSider extends React.Component<SiderProps, SiderState> {
 
     render() {
         return (
-            <Sider width={200} className="site-layout-background">
+            <Sider className="site-layout-background">
                 <Menu
                     mode="inline"
                     defaultSelectedKeys={[this.state.defaultSelectedKeys]}
                     openKeys={[this.state.defaultOpenKeys]}
-                    onClick={this.onHandlerClick.bind(this)}
+                    onClick={this.onHandlerClick}
                 >
                     {this.htmlSiderMenu()}
                 </Menu>

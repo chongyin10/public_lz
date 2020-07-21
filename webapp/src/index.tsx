@@ -10,9 +10,10 @@ import './index.scss';
 
 ReactDOM.render(
     <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+        {/* <PersistGate loading={null} persistor={persistor}>
             <RootRouter />
-        </PersistGate>
+        </PersistGate> */}
+        <RootRouter />
     </Provider>,
     document.getElementById('root')
 )

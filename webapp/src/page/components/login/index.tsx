@@ -33,7 +33,7 @@ class Login extends React.Component<LoginProps, LoginState> {
     componentDidUpdate() {
         let { login, history, location }: any = this.props;
         if (login && login.length > 0) {
-            let RedirectUrl = location.state ? location.state.from.pathname : '/'
+            let RedirectUrl = location.state ? location.state.from.pathname : '/';
             history.push(RedirectUrl)
         }
     }

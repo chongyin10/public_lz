@@ -38,6 +38,7 @@ const devConfig = {
 
     devServer: {
         contentBase: path.resolve(__dirname, '../dist'),
+        overlay: true,
         host: '0.0.0.0',
         port: 3000,
         inline: true,

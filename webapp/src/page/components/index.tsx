@@ -15,14 +15,12 @@ export interface IState {
 }
 
 class App extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
-        super(props);
-        this.state = {};
-    }
-
+   
     async componentDidMount() {
+        console.log('执行了')
         await this.props.setLoading(false, () => { });
         await this.props.getModules(() => { })
+
     }
 
     render() {

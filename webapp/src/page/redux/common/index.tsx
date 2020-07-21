@@ -32,14 +32,38 @@ export function setLoading(loading: boolean) {
 }
 
 /**
- * 设置所有的menu点击key值
+ * 设置一级key
  * @param moudleKey 
  */
-export function moudleKeyAll(moudleKey: any) {
+export function oneLevelKeyFun(oneLevelKey: string) {
     return (dispatch: Dispatch) => {
         dispatch({
-            type: T.MENU_ALL_KEY,
-            payload: moudleKey
+            type: T.ONE_LEVEL_KEY,
+            payload: oneLevelKey
+        })
+    }
+}
+/**
+ * 设置二级key
+ * @param moudleKey 
+ */
+export function twoLevelKeyFun(twoLevelKey: string) {
+    return (dispatch: Dispatch) => {
+        dispatch({
+            type: T.TWO_LEVEL_KEY,
+            payload: twoLevelKey
+        })
+    }
+}
+/**
+ * 设置三级key
+ * @param moudleKey 
+ */
+export function threeLevelKeyFun(threeLevelKey: string) {
+    return (dispatch: Dispatch) => {
+        dispatch({
+            type: T.THERR_LEVEL_KEY,
+            payload: threeLevelKey
         })
     }
 }
@@ -56,10 +80,20 @@ export default function (state = initState, action: Action) {
                 ...state,
                 moduleList: action.payload
             }
-        case T.MENU_ALL_KEY:
+        case T.ONE_LEVEL_KEY:
             return {
                 ...state,
-                moudleKey: action.payload
+                oneLevelKey: action.payload
+            }
+        case T.TWO_LEVEL_KEY:
+            return {
+                ...state,
+                twoLevelKey: action.payload
+            }
+        case T.THERR_LEVEL_KEY:
+            return {
+                ...state,
+                threeLevelKey: action.payload
             }
         default:
             return {

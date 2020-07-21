@@ -1,26 +1,30 @@
 import React from "react";
-import { Layout, Menu, Avatar, Dropdown, Button, Divider } from 'antd';
+import { Layout, Menu, Avatar, Dropdown, Button } from 'antd';
 import { Link } from "react-router-dom";
 
-import LogPng from '../../static/images/logo.png';
+import LogPng from '@/page/static/images/logo.png';
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import '@/page/common/header/index.scss';
-import { compose } from "redux";
 
 const { Header } = Layout;
 
 export interface HeaderProps {
     perItem?: any[];
     moduleList?: any;
+    oneLevelKey?: any;
     initLoginUser(callback: () => void): void;
-    moudleKeyAll(moudleKeyAll: any, callback: () => void): void;
+    oneLevelKeyFun(moudleKeyAll: any, callback: () => void): void;
 }
 
 export interface HeaderState {
-
 }
 
 class VHeader extends React.Component<HeaderProps, HeaderState> {
+
+    constructor(props: HeaderProps) {
+        super(props);
+
+    }
 
     exeHanderClick = ({ key, keypatch }: any) => {
         let { location, history }: any = this.props;
@@ -31,7 +35,7 @@ class VHeader extends React.Component<HeaderProps, HeaderState> {
     }
 
     onHandlerClick = ({ key }: any) => {
-        this.props.moudleKeyAll({ oneLevelKey: key }, () => { })
+        this.props.oneLevelKeyFun(key, () => { });
     }
 
     overlayMenu = () => {
@@ -45,16 +49,17 @@ class VHeader extends React.Component<HeaderProps, HeaderState> {
                 }
             }
         }
-        return (<Menu key='chiItems' onClick={this.exeHanderClick.bind(this)}>{chiItems}</Menu>)
+        return (<Menu key='chiItems' onClick={this.exeHanderClick}>{chiItems}</Menu>)
     }
 
     htmlMenu = () => {
+        console.log(this.props.oneLevelKey)
         let { moduleList } = this.props;
         let moduleArray = [];
         for (let module of moduleList) {
-            moduleArray.push(<Menu.Item key={module['identification']}>{module['name']}</Menu.Item>);
+            moduleArray.push(<Menu.Item key={module['identification']}><Link to={module['url']} >{module['name']}</Link ></Menu.Item>);
         }
-        return (<Menu key='dark' theme="dark" mode="horizontal" onClick={this.onHandlerClick.bind(this)}>{moduleArray}</Menu>)
+        return (<Menu key='dark' defaultSelectedKeys={[String(this.props.oneLevelKey)]} theme="dark" mode="horizontal" onClick={this.onHandlerClick}>{moduleArray}</Menu>)
     }
 
     render() {

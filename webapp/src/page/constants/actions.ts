@@ -8,5 +8,7 @@ export const MODULE_LIST = 'MODULE_LIST';
 
 export const PER_ITEM = 'PER_ITEM'; // 个人中心
 
-export const MENU_ALL_KEY = 'MENU_ALL_KEY'
+export const ONE_LEVEL_KEY = 'ONE_LEVEL_KEY'; // 一级key
+export const TWO_LEVEL_KEY = 'TWO_LEVEL_KEY'; // 二级key
+export const THERR_LEVEL_KEY = 'THERR_LEVEL_KEY'; // 三级key
 

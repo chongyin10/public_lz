@@ -5,22 +5,18 @@ export type State = {
     loading: Boolean,
     moduleList: ModuleList,
     perItem: any[],
-    moudleKey: {
-        oneLevelKey: any;
-        twoLevelKey: any;
-        threeLevelKey: any;
-    },
+    oneLevelKey: any; // 一级key
+    twoLevelKey: any; // 二级key
+    threeLevelKey: any; // 三级key
 }
 
 export const initState: State = {
     loading: false,
     moduleList: [],
     perItem: perItem,
-    moudleKey: {
-        oneLevelKey: undefined,
-        twoLevelKey: undefined,
-        threeLevelKey: undefined,
-    }
+    oneLevelKey: undefined,
+    twoLevelKey: undefined,
+    threeLevelKey: undefined,
 }
 
 export type Action = {

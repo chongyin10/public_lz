@@ -30,7 +30,7 @@ axios.interceptors.response.use(
     function (error) {
         return Promise.reject(error);
     }
-);
+)
 
 axios.interceptors.request.use(function (config) {
     if (config.method === 'post') {
@@ -51,8 +51,8 @@ axios.interceptors.request.use(function (config) {
 export function get(url: string, data: any) {
     return axios.get(process.env.http_api + url, {
         params: data
-    });
-};
+    })
+}
 
 // By default, axios serializes JavaScript objects to JSON.
 export function post(url: string, data: any) {
@@ -64,8 +64,8 @@ export function post(url: string, data: any) {
         },
         data: qs.stringify(data),
         withCredentials: true,
-    });
-};
+    })
+}
 
 export function put(url: string, data: any) {
     return axios({
@@ -73,13 +73,13 @@ export function put(url: string, data: any) {
         url,
         data
     });
-};
+}
 export function del(url: string, data: any) {
     return axios({
         method: 'delete',
         url: `${process.env.http_api + url}/${data && data.id}`,
         withCredentials: true
     });
-};
+}
 
 export default axios;

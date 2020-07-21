@@ -1,6 +1,13 @@
 import React from "react";
 import { Layout, Menu, Breadcrumb } from 'antd';
 
+import User from '@/page/components/system/user';
+import UserGroup from '@/page/components/system/userGroup';
+import Power from '@/page/components/system/power';
+import PowerGroup from '@/page/components/system/powerGroup';
+import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
+import ContentRouter from '@/page/router/contentRouter';
+
 const { Content } = Layout;
 export interface ContentProps {
 
@@ -26,7 +33,7 @@ class VContent extends React.Component<ContentProps, ContentState> {
                         minHeight: 280,
                     }}
                 >
-                    Content
+                    <ContentRouter />
                 </Content>
             </Layout>
         );
