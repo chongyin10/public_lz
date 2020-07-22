@@ -2,7 +2,19 @@ import * as T from '@/page/constants/actions';
 import * as Api from '@/page/constants/api';
 import { initState, Action } from '@/page/redux/common/state';
 import { Dispatch } from 'redux';
-import { post } from '@/page/utils/request';
+import { post } from '@/page/utils/request.tsx';
+
+/**
+ * 初始化module列表数据
+ */
+export function initModules() {
+    return (dispatch: Dispatch) => {
+        dispatch({
+            type: T.INIT_MODULE_LIST,
+            payload: []
+        })
+    }
+}
 
 /**
  * 加载module模块
@@ -35,7 +47,7 @@ export function setLoading(loading: boolean) {
  * 设置一级key
  * @param moudleKey 
  */
-export function oneLevelKeyFun(oneLevelKey: string) {
+export function oneLevelKeyFun(oneLevelKey: any) {
     return (dispatch: Dispatch) => {
         dispatch({
             type: T.ONE_LEVEL_KEY,
@@ -47,7 +59,7 @@ export function oneLevelKeyFun(oneLevelKey: string) {
  * 设置二级key
  * @param moudleKey 
  */
-export function twoLevelKeyFun(twoLevelKey: string) {
+export function twoLevelKeyFun(twoLevelKey: any) {
     return (dispatch: Dispatch) => {
         dispatch({
             type: T.TWO_LEVEL_KEY,
@@ -59,7 +71,7 @@ export function twoLevelKeyFun(twoLevelKey: string) {
  * 设置三级key
  * @param moudleKey 
  */
-export function threeLevelKeyFun(threeLevelKey: string) {
+export function threeLevelKeyFun(threeLevelKey: any) {
     return (dispatch: Dispatch) => {
         dispatch({
             type: T.THERR_LEVEL_KEY,
@@ -94,6 +106,11 @@ export default function (state = initState, action: Action) {
             return {
                 ...state,
                 threeLevelKey: action.payload
+            }
+        case T.INIT_MODULE_LIST:
+            return {
+                ...state,
+                moduleList: action.payload
             }
         default:
             return {

@@ -25,5 +25,8 @@ export class User extends Model<User> {
     @Column
     status?: Number
 
+    @Column
+    lastTime?: Date;
+
 }
 

@@ -1,18 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, withRouter, Route, Redirect } from "react-router-dom";
-import { Dispatch, bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import NotFound from '@/page/common/error';
 
-import * as LoginDispatch from '@/page/redux/login';
-import * as ComDispatch from '@/page/redux/common';
-
-import Routers from '@/page/router/routerMap';
-import NotFound from '../common/notFound';
-
-import { UserList } from '../interface/user';
-
+import Login from '@/page/components/login';
+import App from '@/page/components';
 export interface RootRouterProps {
-    login?: UserList;
 }
 
 export interface RootRouterState {
@@ -22,20 +14,13 @@ export interface RootRouterState {
 class RootRouter extends React.Component<RootRouterProps, RootRouterState> {
 
     render() {
-        let { login } = this.props;
         return (
             <Router>
                 <Switch>
-                    {Routers.map((item, index) => {
-                        return <Route key={index} exact={item.exact} path={item.path} render={props =>
-                            (!item.auth ? (login && login.length > 0 ? <Redirect to='/' {...this.props} /> : <item.component {...this.props} {...props} />) : (login && login.length > 0 ? <item.component {...this.props} {...props} /> : <Redirect to={{
-                                pathname: '/login',
-                                state: {
-                                    from: props.location,
-                                }
-                            }} />)
-                            )} />
-                    })}
+                    <Route exact path='/' component={App} />
+                    <Route path='/login' component={Login} />
+                    <Route path='/system' component={App} />
+                    <Route path='/news' component={App} />
                     <Route component={NotFound} />
                 </Switch>
             </Router>
@@ -43,13 +28,4 @@ class RootRouter extends React.Component<RootRouterProps, RootRouterState> {
     }
 }
 
-const mapStateToProps = (state: any) => ({
-    ...state.RLogin,
-    ...state.RCom,
-});
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
-    ...LoginDispatch,
-    ...ComDispatch,
-}, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(RootRouter);
+export default RootRouter;

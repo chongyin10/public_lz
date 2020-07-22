@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from "react-router-dom";
 
-import { contentRouter } from '@/page/router/routerMap';
+import contentRouter from '@/page/router/routerMap';
 
 export interface ContentRouterProps {
 }
@@ -15,8 +15,8 @@ class ContentRouter extends React.Component<ContentRouterProps, ContentRouterSta
         return (
             <Switch>
                 {contentRouter.map((item, index) => {
-                    return <Route key={index} path={item.path} render={props => (
-                        <item.component {...this.props} {...props} />
+                    return <Route key={index} path={item.path} render={() => (
+                        <item.component />
                     )} />
                 })}
             </Switch>

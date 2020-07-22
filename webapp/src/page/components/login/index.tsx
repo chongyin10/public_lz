@@ -2,14 +2,17 @@ import React from "react";
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { FormInstance } from "antd/lib/form";
+import { Dispatch, bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import loginJpg from '@images/login_bg.jpg';
-import './login.scss';
+import '@/page/components/login/index.scss';
+import { getLoginUser } from "@/page/redux/login";
 import { User } from "@/page/interface/user";
+import { loginInterceptor } from "@/page/utils/interceptor";
 
 export interface LoginProps {
-    getLoginUser(user: User, callback: () => void): void;
-    setLoading(loading: Boolean, callback: () => void): void;
+    onGetLoginUser: (user: User) => void;
 }
 
 export interface LoginState {
@@ -25,18 +28,13 @@ class Login extends React.Component<LoginProps, LoginState> {
 
     formRef = React.createRef<FormInstance>();
 
-    onFinish = (obj: any) => {
-        this.props.getLoginUser(obj, () => { });
-        this.props.setLoading(true, () => { });
-    };
-
     componentDidUpdate() {
-        let { login, history, location }: any = this.props;
-        if (login && login.length > 0) {
-            let RedirectUrl = location.state ? location.state.from.pathname : '/';
-            history.push(RedirectUrl)
-        }
+        loginInterceptor(this.props)
     }
+
+    onFinish = (obj: any) => {
+        this.props.onGetLoginUser(obj);
+    };
 
     render() {
         return (
@@ -82,4 +80,11 @@ class Login extends React.Component<LoginProps, LoginState> {
     }
 }
 
-export default Login;
+const mapStateToProps = (state: any) => ({
+    login: state.RLogin.login,
+});
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
+    onGetLoginUser: getLoginUser
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -25,8 +25,9 @@
             "@/*": ["src/*"],
             "@ant-design/icons/lib/dist$": ["src/icons.js"],
             "@components/*": ["src/page/components/*"],
+            "@common/*": ["src/page/common/*"],
             "@images/*": ["src/page/static/images/*"],
-            "@leaft/*": ["src/leaflet.ts"]
+            "@leaft/*": ["src/leaflet/leaflet.ts"]
         }, /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
         "allowSyntheticDefaultImports": true, /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
         "esModuleInterop": true, /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
@@ -34,7 +35,7 @@
         "emitDecoratorMetadata": true,
     },
     "include": [
-        "src/*", "types/*",
+        "src", "types/*",
     ],
     "exclude": [
         "node_modules"

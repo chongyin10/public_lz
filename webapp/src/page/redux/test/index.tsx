@@ -1,4 +1,4 @@
-import { get, del } from '../../utils/request';
+import { get, del, post } from '@/page/utils/request';
 import * as T from '@/page/constants/actions';
 import { initState, Action } from '@/page/redux/test/state';
 import { Dispatch } from 'redux';

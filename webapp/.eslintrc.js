@@ -45,6 +45,7 @@ module.exports = {
         'react/no-did-update-set-state': 'off',
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
+        "no-debugger": process.env.NODE_DEV === 'production' ? 2 : 0,
         indent: [
             'off',
             2,

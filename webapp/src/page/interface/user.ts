@@ -3,7 +3,8 @@ export interface User {
     code?: string;
     name?: string;
     password?: string;
-    status?: Number
+    status?: Number;
+    lastTime?: string;
 }
 
 export type UserList = User[] | undefined

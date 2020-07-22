@@ -1,7 +1,9 @@
 import React from "react";
 import { Layout, Menu } from 'antd';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import { Dispatch, bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { Link, NavLink } from "react-router-dom";
+import { twoLevelKeyFun, threeLevelKeyFun } from "@/page/redux/common";
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
@@ -83,4 +85,15 @@ class VSider extends React.Component<SiderProps, SiderState> {
     }
 }
 
-export default VSider;
+const mapStateToProps = (state: any) => ({
+    moduleList:state.RCom.moduleList,
+    oneLevelKey:state.RCom.oneLevelKey,
+    twoLevelKey:state.RCom.twoLevelKey,
+    threeLevelKey:state.RCom.threeLevelKey,
+});
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
+    twoLevelKeyFun,
+    threeLevelKeyFun
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(VSider);

@@ -32,6 +32,15 @@ export default class UserDao extends User {
         return obj && obj.length[0] === 1 ? true : false;
     }
 
+    async updateUserByLastTIme(id: Number) {
+        let obj = await User.update({ lastTime: new Date() }, {
+            where: {
+                id: Number(id)
+            },
+        });
+        return obj
+    }
+
     /**
      * 主键查询登录用户
      * @param id 

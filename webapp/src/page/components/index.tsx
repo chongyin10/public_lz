@@ -1,44 +1,37 @@
 import React from "react";
-import { Layout, Menu, Spin } from 'antd';
-import { Footer, Content, Sider, Header } from '@/page/common';
+import { Dispatch, bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-import '@/page/components/index.scss';
+import LayoutApp from '@/page/common';
+import { getModules } from "../redux/common";
 
-export interface IProps {
-    loading?: Boolean;
-    setLoading(loading: Boolean, callback: () => void): void;
-    getModules(callback: () => void): void;
+interface AppProps {
+    onGetModules(): void;
 }
 
-export interface IState {
+export interface AppState {
 
 }
 
-class App extends React.Component<IProps, IState> {
-   
-    async componentDidMount() {
-        console.log('执行了')
-        await this.props.setLoading(false, () => { });
-        await this.props.getModules(() => { })
+class App extends React.Component<AppProps, AppState> {
 
+    async UNSAFE_componentWillMount() {
+        await this.props.onGetModules()
     }
 
     render() {
         return (
-            <Spin spinning={Boolean(this.props.loading)} tip="Loading...">
-                <div style={{ height: window.innerHeight }}>
-                    <Layout>
-                        <Header {...this.props} />
-                        <Layout>
-                            <Sider {...this.props} />
-                            <Content {...this.props} />
-                        </Layout>
-                        <Footer {...this.props} />
-                    </Layout>
-                </div>
-            </Spin >
-        );
+            <div className='app'>
+                <LayoutApp />
+            </div>
+        )
     }
 }
 
-export default App;
+const mapStateToProps = (state: any) => ({
+});
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
+    onGetModules: getModules
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

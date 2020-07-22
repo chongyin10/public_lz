@@ -25,7 +25,7 @@ module.exports = {
                 include: SRC_PATH
             },
             {
-                test: /\.(j|t)sx?$/,
+                test: /\.(j|t)s(x)?$/,
                 include: [SRC_PATH],
                 use: ['babel-loader', 'eslint-loader'],
                 exclude: /node_modules/
@@ -114,8 +114,9 @@ module.exports = {
             '@': path.resolve('./src'),
             "@ant-design/icons/lib/dist$": path.resolve('./src/icons.ts'),
             '@components': path.resolve('./src/page/components'),
+            '@common': path.resolve('./src/page/common'),
             '@images': path.resolve('./src/page/static/images'),
-            '@leafMap': path.resolve('./src/leaflet.ts')
+            '@leafMap': path.resolve('./src/leaflet/leaflet.ts')
         }
     },
 

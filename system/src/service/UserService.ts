@@ -10,7 +10,24 @@ export default class TestService {
     async getUser(name: string, password: string) {
         const userDao = new UserDao();
         try {
-            return await userDao.getUser(name, password);
+            let user = await userDao.getUser(name, password);
+            if (user && user.length > 0) {
+                await this.updateUserByLastTIme(user[0]["id"]);
+            }
+            return user;
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+
+    /**
+     * 更新登录时间
+     * @param id 
+     */
+    async updateUserByLastTIme(id: Number) {
+        const userDao = new UserDao();
+        try {
+            return await userDao.updateUserByLastTIme(id);
         } catch (error) {
             throw new Error(error)
         }
@@ -30,6 +47,10 @@ export default class TestService {
         }
     }
 
+    /**
+     * 根据id获取用户
+     * @param id 
+     */
     async getUserById(id: Number) {
         const userDao = new UserDao();
         try {

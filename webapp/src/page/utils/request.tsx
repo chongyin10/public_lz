@@ -9,6 +9,8 @@
 import originAxios from 'axios';
 import { message, Spin } from 'antd';
 import qs from 'qs';
+import ReactDOM from 'react-dom';
+import * as React from 'react';
 
 const axios = originAxios.create({
     timeout: 20000
@@ -17,20 +19,21 @@ const axios = originAxios.create({
 axios.defaults.withCredentials = true;  //设置cross跨域 并设置访问权限 允许跨域携带cookie信息
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-axios.interceptors.response.use(
-    function (response) {
-        let status = response.data;
-        if (response.data && response.data.flag === 1) {
-            let errorMsg = response.data.msg;
-            message.error(errorMsg);
-            return Promise.reject(errorMsg);
-        }
-        return response.data;
-    },
-    function (error) {
-        return Promise.reject(error);
-    }
-)
+/**
+ * 显示loadding
+ */
+function showLoadding() {
+    var dom = document.createElement("div");
+    dom.setAttribute("id", 'loadding');
+    document.body.appendChild(dom);
+    ReactDOM.render(<Spin tip='加载中......' size="large" />, dom)
+}
+/**
+ * 隐藏loadding
+ */
+function hideLoadding() {
+    document.body.removeChild(document.getElementById('loadding') || new Element)
+}
 
 axios.interceptors.request.use(function (config) {
     if (config.method === 'post') {
@@ -43,10 +46,28 @@ axios.interceptors.request.use(function (config) {
             ...config.params,
         }
     }
+    showLoadding()
     return config;
 }, function (error) {
     return Promise.reject(error);
 })
+
+axios.interceptors.response.use(
+    function (response) {
+        let status = response.data;
+        if (response.data && response.data.flag === 1) {
+            let errorMsg = response.data.msg;
+            message.error(errorMsg);
+            return Promise.reject(errorMsg);
+        }
+        hideLoadding()
+        return response.data;
+    },
+    function (error) {
+        hideLoadding()
+        return Promise.reject(error);
+    }
+)
 
 export function get(url: string, data: any) {
     return axios.get(process.env.http_api + url, {
