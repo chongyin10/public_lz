@@ -5,7 +5,7 @@
 export interface Module {
     id?: Number;
     code?: string;
-    name?: number;
+    name?: string;
     rid?: Number;
     weight?: Number;
     identification?: Number;

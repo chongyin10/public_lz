@@ -32,7 +32,7 @@ export function getModules() {
 
 /**
  * 全局加载spin
- * @param param 
+ * @param loading true | false
  */
 export function setLoading(loading: boolean) {
     return (dispatch: Dispatch) => {
@@ -80,6 +80,83 @@ export function threeLevelKeyFun(threeLevelKey: any) {
     }
 }
 
+/**
+ * 加载api
+ */
+export function getApiAll() {
+    return (dispatch: Dispatch) => {
+        post(Api.getApiAll, {}).then((res: any) => {
+            dispatch({
+                type: T.GET_API_ALL,
+                payload: res
+            })
+        })
+    }
+}
+
+/**
+ * 查询条件方法
+ * @param searchForm 检索条件
+ */
+export function setSearchForm(searchForm: any) {
+    return (dispatch: Dispatch) => {
+        dispatch({
+            type: T.SEARCH_FORM,
+            payload: searchForm
+        })
+    }
+}
+
+/**
+ * 更新操作
+ * @param api 接口api
+ * @param data form数据表单
+ */
+export function updateDataForm(api: string, data: any) {
+    return (dispatch: Dispatch) => {
+        post(api, data).then((res: any) => {
+            dispatch({
+                type: T.UPDATE_DATA,
+                payload: res
+            })
+        })
+    }
+}
+
+/**
+ * 新增操作
+ * @param api 接口api
+ * @param data form数据表单
+ */
+export function addDataForm(api: string, data: any) {
+    return (dispatch: Dispatch) => {
+        post(api, { data }).then((res: any) => {
+            console.log('@res:', res)
+            dispatch({
+                type: T.ADD_DATA,
+                payload: {
+                    addData: res,
+                    modalVisible: res.length == 0 ? true : false  // 是否关闭modal
+                }
+            })
+        })
+    }
+}
+
+/**
+ * modal窗口显隐
+ * @param modalVisible true | false
+ */
+export function onModalCancel(modalVisible: Boolean) {
+    return (dispatch: Dispatch) => {
+        dispatch({
+            type: T.MODAL_VISIBLE,
+            payload: modalVisible
+        })
+    }
+}
+
+
 export default function (state = initState, action: Action) {
     switch (action.type) {
         case T.SET_SPIN_LOADING:
@@ -111,6 +188,37 @@ export default function (state = initState, action: Action) {
             return {
                 ...state,
                 moduleList: action.payload
+            }
+        case T.GET_API_ALL:
+            return {
+                ...state,
+                apiList: action.payload
+            }
+        case T.SEARCH_FORM:
+            return {
+                ...state,
+                searchForm: action.payload
+            }
+        case T.ON_MODAL_OK:
+            return {
+                ...state,
+                modalFormData: action.payload
+            }
+        case T.MODAL_VISIBLE:
+            return {
+                ...state,
+                modalVisible: action.payload
+            }
+        case T.UPDATE_DATA:
+            return {
+                ...state,
+                updateData: action.payload
+            }
+        case T.ADD_DATA:
+            return {
+                ...state,
+                addData: action.payload.addData,
+                modalVisible: action.payload.modalVisible
             }
         default:
             return {

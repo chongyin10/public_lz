@@ -16,3 +16,17 @@ export const INIT_MODULE_LIST = 'INIT_MODULE_LIST'; // 初始化moudle列表
 
 export const INIT_LOGIN_NOTIFICATION = 'INIT_LOGIN_NOTIFICATION'; // 登录消息提示框
 
+export const GET_USER_ALL = 'GET_USER_ALL'; // 所有用户集合
+
+export const GET_API_ALL = 'GET_API_ALL'; // 加载所有的api
+
+export const SEARCH_FORM = 'SEARCH_FORM'; // 查询条件
+
+export const ON_MODAL_OK = 'ON_MODAL_OK';  // 
+export const ON_MODAL_CANCEL = 'ON_MODAL_CANCEL';
+export const MODAL_VISIBLE = 'MODAL_VISIBLE'
+
+export const UPDATE_DATA = 'UPDATE_DATA'; // 更新数据
+export const ADD_DATA = 'ADD_DATA'; // 新增数据
+export const Del_DATA = 'Del_DATA'; // 删除数据
+

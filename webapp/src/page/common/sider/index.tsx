@@ -4,6 +4,9 @@ import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link, NavLink } from "react-router-dom";
 import { twoLevelKeyFun, threeLevelKeyFun } from "@/page/redux/common";
+import { getApiUtils } from "@/page/utils/common";
+import { getUserAll } from "@/page/redux/user";
+import { User } from "@/page/interface/user";
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
@@ -14,6 +17,7 @@ export interface SiderProps {
     threeLevelKey?: string;
     twoLevelKeyFun(twoLevelKey: any, callback: () => void): void;
     threeLevelKeyFun(threeLevelKey: any, callback: () => void): void;
+    getUserAll(user: User, page?: Number): void;
 }
 
 export interface SiderState {
@@ -30,12 +34,17 @@ class VSider extends React.Component<SiderProps, SiderState> {
         };
     }
 
-    onHandlerClick = ({ keyPath, key }: any) => {
+    onHandlerClick = (obj: any) => {
+        let { key } = obj;
         this.setState({
             defaultSelectedKeys: String(key),
         });
-        this.props.threeLevelKeyFun(key, () => { })
-
+        this.props.threeLevelKeyFun(key, () => { });
+        let { apiList }: any = this.props;
+        let api: any[] = getApiUtils(apiList, key, 0);
+        if (api && api.length > 0) {
+            this.props.getUserAll({}, 0);
+        }
     }
 
     onHandlerTitleClick = ({ key }: any) => {
@@ -57,7 +66,7 @@ class VSider extends React.Component<SiderProps, SiderState> {
                             {
                                 chiM["children"].map((item: any, index: number) => {
                                     return (
-                                        <Menu.Item key={item['identification']}><NavLink to={item['url']} >{item['name']}</NavLink ></Menu.Item>
+                                        <Menu.Item key={item['id']}><NavLink to={item['url']} >{item['name']}</NavLink ></Menu.Item>
                                     )
                                 })
                             }
@@ -86,14 +95,16 @@ class VSider extends React.Component<SiderProps, SiderState> {
 }
 
 const mapStateToProps = (state: any) => ({
-    moduleList:state.RCom.moduleList,
-    oneLevelKey:state.RCom.oneLevelKey,
-    twoLevelKey:state.RCom.twoLevelKey,
-    threeLevelKey:state.RCom.threeLevelKey,
+    moduleList: state.RCom.moduleList,
+    oneLevelKey: state.RCom.oneLevelKey,
+    twoLevelKey: state.RCom.twoLevelKey,
+    threeLevelKey: state.RCom.threeLevelKey,
+    apiList: state.RCom.apiList,
 });
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
     twoLevelKeyFun,
-    threeLevelKeyFun
+    threeLevelKeyFun,
+    getUserAll,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(VSider);

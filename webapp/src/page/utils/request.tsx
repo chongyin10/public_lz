@@ -54,17 +54,17 @@ axios.interceptors.request.use(function (config) {
 
 axios.interceptors.response.use(
     function (response) {
-        let status = response.data;
-        if (response.data && response.data.flag === 1) {
-            let errorMsg = response.data.msg;
-            message.error(errorMsg);
-            return Promise.reject(errorMsg);
+        let { data, msg, success } = response.data;
+        if (success) {
+            message.success(msg);
         }
-        hideLoadding()
-        return response.data;
+        // hideLoadding();
+        setTimeout(hideLoadding, 300)
+        return success ? data : response.data;
     },
     function (error) {
-        hideLoadding()
+        hideLoadding();
+        message.error('系统错误，请联系运维！');
         return Promise.reject(error);
     }
 )

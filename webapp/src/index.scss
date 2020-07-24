@@ -22,9 +22,46 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.75);
+    opacity: 0.1;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 9999;
     font-size: 20px;
+}
+
+[data-theme="compact"] .ant-advanced-search-form,
+.ant-advanced-search-form {
+    padding: 24px 24px 10px 24px;
+    background: #fbfbfb;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+}
+
+[data-theme="compact"] .ant-advanced-search-form .ant-form-item,
+.ant-advanced-search-form .ant-form-item {
+    display: flex;
+}
+
+[data-theme="compact"] .ant-advanced-search-form .ant-form-item-control-wrapper,
+.ant-advanced-search-form .ant-form-item-control-wrapper {
+    flex: 1;
+}
+
+.ant-advanced-search-form-btn {
+    text-align: center;
+
+    .submit-button{
+        margin: 0px 10px 0px 0px !important;
+        background: #1890FF !important;
+        border-color: none !important;
+    }
+
+    .reset-button{
+        margin: 0px 0px 0px 10px !important;
+    }
+}
+
+.ant-table-thead > tr > th, .ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td {
+    padding: 10px 10px !important;
 }

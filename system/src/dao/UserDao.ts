@@ -1,7 +1,8 @@
 import { User } from '../models/User';
+import QuerySql from '../utils/SqlQuery';
 
 export default class UserDao extends User {
-
+    protected querySql = new QuerySql(this, 'user', 10);
     /**
      * 获取登录账户信息
      * @param name 
@@ -32,6 +33,10 @@ export default class UserDao extends User {
         return obj && obj.length[0] === 1 ? true : false;
     }
 
+    /**
+     * 
+     * @param id 
+     */
     async updateUserByLastTIme(id: Number) {
         let obj = await User.update({ lastTime: new Date() }, {
             where: {
@@ -48,5 +53,23 @@ export default class UserDao extends User {
     async getUserById(id: Number) {
         let user = await User.findByPk(Number(id));
         return user;
+    }
+
+    /**
+     * 获取所有用户信息
+     * @param user 
+     */
+    async getUserAll(user: User, page?: Number,) {
+        let obj = await this.querySql.querySqlAll(user, page);
+        let objPage = await this.querySql.querySqlAll(user);
+        return { pageCount: objPage.length, data: obj };
+    }
+
+    /**
+     * 新增用户
+     * @param user 
+     */
+    async addUser(user: User) {
+        return await User.create(user)
     }
 }

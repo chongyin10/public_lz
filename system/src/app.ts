@@ -8,6 +8,8 @@ import cookieParser = require('cookie-parser');
 import { test_R } from './controller/test';
 import { login } from './controller/login';
 import { module } from './controller/module';
+import { user } from './controller/user';
+import { api } from './controller/api';
 
 export const app = express();
 app.use(httpLogger);
@@ -40,7 +42,9 @@ app.all('*', async function (req, res, next) {
 
 app.use('/test', test_R);
 app.use('/login', login);
-app.use('/module', module)
+app.use('/module', module);
+app.use('/system', user);
+app.use('/api', api)
 
 console.log(`@运行环境为：${process.env.NODE_ENV}`)
 

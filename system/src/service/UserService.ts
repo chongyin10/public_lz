@@ -1,6 +1,8 @@
 import UserDao from '../dao/UserDao';
+import { User } from '../models/User';
+import { resultUtils } from '../utils/utils';
 
-export default class TestService {
+export default class UserService {
 
     /**
      * service 注册服务器
@@ -57,6 +59,34 @@ export default class TestService {
             return await userDao.getUserById(id);
         } catch (error) {
             throw new Error(error)
+        }
+    }
+
+    /**
+     * 
+     * @param user 
+     */
+    async getUserAll(user: User, page: Number) {
+        const userDao = new UserDao();
+        try {
+            return await userDao.getUserAll(user, page);
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+
+    /**
+     * 新增用户
+     * @param user 
+     */
+    async addUser(user: User) {
+        const userDao = new UserDao();
+        try {
+            let { dataValues }: any = await userDao.addUser(user);
+            let result = resultUtils("200", '新增成功', dataValues)
+            return result
+        } catch (error) {
+            return resultUtils("202", '已存在用户，不可重复添加',[])
         }
     }
 

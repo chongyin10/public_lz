@@ -35,7 +35,6 @@ class LayoutApp extends React.Component<LayoutAppProps, LayoutAppState> {
     }
 
     openNotification = (prarm: any) => {
-        console.log(prarm)
         notification.success({
             message: '登录成功',
             placement: 'bottomRight',
