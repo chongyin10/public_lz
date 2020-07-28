@@ -8,6 +8,7 @@ export interface formMapProps {
     searchForm: any[];
     onFinish: (data: any) => void;
     setSearchForm: (searchForm: any) => void;
+    setCurrentPage: (currentPage: Number) => void;
 }
 
 export interface formMapState {
@@ -21,7 +22,7 @@ class formMap extends React.Component<formMapProps, formMapState> {
     onFinish = (data: any) => {
         this.props.setSearchForm(data);
         this.props.onFinish(data);
-
+        this.props.setCurrentPage(1);
     }
 
     colHtml = (data: any[]) => {

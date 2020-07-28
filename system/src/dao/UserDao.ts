@@ -59,10 +59,10 @@ export default class UserDao extends User {
      * 获取所有用户信息
      * @param user 
      */
-    async getUserAll(user: User, page?: Number,) {
+    async getUserAll(user: any, page: Number,) {
         let obj = await this.querySql.querySqlAll(user, page);
         let objPage = await this.querySql.querySqlAll(user);
-        return { pageCount: objPage.length, data: obj };
+        return { pageCount: objPage.length, list: obj };
     }
 
     /**
@@ -71,5 +71,13 @@ export default class UserDao extends User {
      */
     async addUser(user: User) {
         return await User.create(user)
+    }
+
+    async delUser(id: Number) {
+        return await User.destroy({
+            where: {
+                id: Number(id)
+            }
+        })
     }
 }

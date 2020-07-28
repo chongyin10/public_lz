@@ -36,6 +36,7 @@ function hideLoadding() {
 }
 
 axios.interceptors.request.use(function (config) {
+    showLoadding()
     if (config.method === 'post') {
         let data = qs.parse(config.data)
         config.data = qs.stringify({
@@ -46,7 +47,6 @@ axios.interceptors.request.use(function (config) {
             ...config.params,
         }
     }
-    showLoadding()
     return config;
 }, function (error) {
     return Promise.reject(error);
@@ -55,12 +55,20 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(
     function (response) {
         let { data, msg, success } = response.data;
-        if (success) {
+        let result: any = '';
+        if (success && success === true) {
+            result = data;
             message.success(msg);
+        } else if (success === false) {
+            result = data;
+            message.error(msg);
+        } else if (typeof (success) === 'undefined') {
+            success = false;  // 兼容老写法
+            result = response.data;
         }
         // hideLoadding();
-        setTimeout(hideLoadding, 300)
-        return success ? data : response.data;
+        setTimeout(hideLoadding, 500);
+        return result
     },
     function (error) {
         hideLoadding();

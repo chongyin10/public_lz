@@ -11,9 +11,15 @@ export type State = {
     threeLevelKey: any; // 三级key
     searchForm: any;
     modalVisible: Boolean;
+
+    listData: any;
     updateData: Boolean;  // 是否更新成功
     addData: Boolean;  // 新增状态
     delData: Boolean;  // 删除状态
+
+    pageCount: Number; // 总条数
+    currentPage: Number; // 当前页码
+    pageSize: Number; // 当前页显示多少条数据
 }
 
 export const initState: State = {
@@ -26,9 +32,15 @@ export const initState: State = {
     threeLevelKey: undefined,
     searchForm: undefined,
     modalVisible: false,
+    
+    listData: [],
     updateData: false,
     addData: false,
-    delData: false
+    delData: false,
+
+    pageCount: 0,
+    currentPage: 1,
+    pageSize: 10,
 }
 
 export type Action = {

@@ -26,7 +26,10 @@ export const ON_MODAL_OK = 'ON_MODAL_OK';  //
 export const ON_MODAL_CANCEL = 'ON_MODAL_CANCEL';
 export const MODAL_VISIBLE = 'MODAL_VISIBLE'
 
+export const LIST_DATA = 'LIST_DATA'; // list数据集
 export const UPDATE_DATA = 'UPDATE_DATA'; // 更新数据
 export const ADD_DATA = 'ADD_DATA'; // 新增数据
-export const Del_DATA = 'Del_DATA'; // 删除数据
+export const DEL_DATA = 'DEL_DATA'; // 删除数据
+
+export const CURRENT_PAGE = 'CURRENT_PAGE'; // 当前页码
 

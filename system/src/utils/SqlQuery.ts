@@ -26,18 +26,22 @@ export default class QuerySql {
      * 纯sql语句带有where查询
      * @param whereParam 
      */
-    querySqlAll(whereParam?: any,minLimit?: Number): any {
+    querySqlAll(whereParam?: any, minLimit?: Number): any {
         let sqlStr = ` select * from ${this.tabname} `;
         var whereBuffer = new StringBuffer(` where 1 = 1`);
         if (whereParam) {
             for (let param in whereParam) {
-                whereBuffer.append(` and ${param}=:${param}`);
+                if (whereParam[param] != '' && whereParam[param].trim() != '') {
+                    whereBuffer.append(` and ${param}=:${param}`);
+                }
             }
         }
         if (minLimit) {
+            // SELECT * from vote_record_memory LIMIT (n-1)*20,20; 分页计算公式 n:当前页码，20，当前要显示多少记录数
             let _minLimit = Number(Number(minLimit) * Number(this.pageNumber));
-            let _maxLimit = Number(Number(minLimit) + 1) * Number(this.pageNumber);
-            whereBuffer.append(` LIMIT ${_minLimit},${_maxLimit}`);
+            whereBuffer.append(` LIMIT ${_minLimit},${Number(this.pageNumber)}`);
+        } else if (minLimit == 0) {
+            whereBuffer.append(` LIMIT ${minLimit},${Number(this.pageNumber)}`);
         }
         let obj = this.self.sequelize.query(sqlStr + whereBuffer.toString(),
             {

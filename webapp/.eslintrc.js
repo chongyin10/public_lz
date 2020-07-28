@@ -36,6 +36,8 @@ module.exports = {
         // // @fixable 一个缩进必须用两个空格替代
         semi: 0,
         'no-console': 'off',
+        'no-dupe-else-if':'off',
+        'no-duplicate-case':'off',
         'no-unused-vars': 'off',
         'max-nested-callbacks': 'off',
         'react/no-children-prop': 'off',

@@ -63,15 +63,17 @@ export default class UserService {
     }
 
     /**
-     * 
+     * 获取所有用户
      * @param user 
      */
     async getUserAll(user: User, page: Number) {
         const userDao = new UserDao();
         try {
-            return await userDao.getUserAll(user, page);
+            let resultObj: any = await userDao.getUserAll(user, page);
+            let result = resultUtils(true, '获取列表成功', resultObj);
+            return result;
         } catch (error) {
-            throw new Error(error)
+            return resultUtils(false, '获取列表失败', [])
         }
     }
 
@@ -82,11 +84,27 @@ export default class UserService {
     async addUser(user: User) {
         const userDao = new UserDao();
         try {
-            let { dataValues }: any = await userDao.addUser(user);
-            let result = resultUtils("200", '新增成功', dataValues)
+            await userDao.addUser(user);
+            let userList: any = await userDao.getUserAll({}, 0);
+            let result: any = await resultUtils(true, '新增成功', userList);
             return result
         } catch (error) {
-            return resultUtils("202", '已存在用户，不可重复添加',[])
+            return resultUtils(false, '已存在用户，不可重复添加', [])
+        }
+    }
+
+    /**
+     * 
+     * @param id 
+     */
+    async delUser(id: Number) {
+        const userDao = new UserDao();
+        try {
+            await userDao.delUser(id);
+            let userList: any = await userDao.getUserAll({}, 0);
+            return resultUtils(true, '删除成功', userList);
+        } catch (error) {
+            return resultUtils(false, '系统用户无法删除', [])
         }
     }
 

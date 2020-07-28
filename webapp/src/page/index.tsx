@@ -1,5 +1,6 @@
 import React from "react";
-
+import { Dispatch, bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import Router from '@/page/router';
 import '@/page/index.scss';
 
@@ -20,4 +21,11 @@ class Main extends React.Component<MainProps, MainState> {
     }
 }
 
-export default Main;
+const mapStateToProps = (state: any) => ({
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
+

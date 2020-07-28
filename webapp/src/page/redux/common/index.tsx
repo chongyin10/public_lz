@@ -34,7 +34,7 @@ export function getModules() {
  * 全局加载spin
  * @param loading true | false
  */
-export function setLoading(loading: boolean) {
+export function spinLoading(loading: boolean) {
     return (dispatch: Dispatch) => {
         dispatch({
             type: T.SET_SPIN_LOADING,
@@ -95,8 +95,8 @@ export function getApiAll() {
 }
 
 /**
- * 查询条件方法
- * @param searchForm 检索条件
+ * 设置查询条件值
+ * @param searchForm 检索条件值 key-valye
  */
 export function setSearchForm(searchForm: any) {
     return (dispatch: Dispatch) => {
@@ -106,6 +106,24 @@ export function setSearchForm(searchForm: any) {
         })
     }
 }
+
+/**
+ * 查询list操作
+ * @param api 接口path
+ * @param searchData 检索值
+ * @param page 当前页码
+ */
+export function getListData(api: string, searchData: any, page: Number = 0) {
+    return (dispatch: Dispatch) => {
+        post(api, { page, data: searchData }).then((res: any) => {
+            dispatch({
+                type: T.LIST_DATA,
+                payload: res
+            })
+        })
+    }
+}
+
 
 /**
  * 更新操作
@@ -129,14 +147,33 @@ export function updateDataForm(api: string, data: any) {
  * @param data form数据表单
  */
 export function addDataForm(api: string, data: any) {
-    return (dispatch: Dispatch) => {
-        post(api, { data }).then((res: any) => {
-            console.log('@res:', res)
+    return async (dispatch: Dispatch) => {
+        await post(api, { data }).then((res: any) => {
             dispatch({
                 type: T.ADD_DATA,
                 payload: {
                     addData: res,
+                    listData: res, // 更新list列表
                     modalVisible: res.length == 0 ? true : false  // 是否关闭modal
+                }
+            })
+        })
+    }
+}
+
+/**
+ * 删除操作
+ * @param api 接口
+ * @param id 主键id
+ */
+export function deleteData(api: string, id: Number | string) {
+    return async (dispatch: Dispatch) => {
+        await post(api, { id }).then((res: any) => {
+            dispatch({
+                type: T.DEL_DATA,
+                payload: {
+                    delData: res,
+                    listData: res, // 更新list列表
                 }
             })
         })
@@ -148,10 +185,23 @@ export function addDataForm(api: string, data: any) {
  * @param modalVisible true | false
  */
 export function onModalCancel(modalVisible: Boolean) {
-    return (dispatch: Dispatch) => {
-        dispatch({
+    return async (dispatch: Dispatch) => {
+        await dispatch({
             type: T.MODAL_VISIBLE,
             payload: modalVisible
+        })
+    }
+}
+
+/**
+ * 设置当前页码
+ * @param currentPage 
+ */
+export function setCurrentPage(currentPage: Number) {
+    return async (dispatch: Dispatch) => {
+        await dispatch({
+            type: T.CURRENT_PAGE,
+            payload: currentPage
         })
     }
 }
@@ -218,7 +268,24 @@ export default function (state = initState, action: Action) {
             return {
                 ...state,
                 addData: action.payload.addData,
-                modalVisible: action.payload.modalVisible
+                listData: action.payload.listData,
+                modalVisible: action.payload.modalVisible,
+            }
+        case T.DEL_DATA:
+            return {
+                ...state,
+                delData: action.payload.delData,
+                listData: action.payload.listData,
+            }
+        case T.CURRENT_PAGE:
+            return {
+                ...state,
+                currentPage: action.payload
+            }
+        case T.LIST_DATA:
+            return {
+                ...state,
+                listData: action.payload
             }
         default:
             return {

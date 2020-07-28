@@ -21,11 +21,15 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.75);
-    opacity: 0.1;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 30px 50px;
+    margin: 20px 0;
     z-index: 9999;
     font-size: 20px;
 }
@@ -51,17 +55,20 @@
 .ant-advanced-search-form-btn {
     text-align: center;
 
-    .submit-button{
+    .submit-button {
         margin: 0px 10px 0px 0px !important;
-        background: #1890FF !important;
+        background: #1890ff !important;
         border-color: none !important;
     }
 
-    .reset-button{
+    .reset-button {
         margin: 0px 0px 0px 10px !important;
     }
 }
 
-.ant-table-thead > tr > th, .ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td {
+.ant-table-thead > tr > th,
+.ant-table-tbody > tr > td,
+.ant-table tfoot > tr > th,
+.ant-table tfoot > tr > td {
     padding: 10px 10px !important;
 }

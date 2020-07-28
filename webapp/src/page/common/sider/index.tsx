@@ -2,11 +2,9 @@ import React from "react";
 import { Layout, Menu } from 'antd';
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link, NavLink } from "react-router-dom";
-import { twoLevelKeyFun, threeLevelKeyFun } from "@/page/redux/common";
+import { NavLink } from "react-router-dom";
+import { twoLevelKeyFun, threeLevelKeyFun, getListData } from "@/page/redux/common";
 import { getApiUtils } from "@/page/utils/common";
-import { getUserAll } from "@/page/redux/user";
-import { User } from "@/page/interface/user";
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
@@ -17,7 +15,6 @@ export interface SiderProps {
     threeLevelKey?: string;
     twoLevelKeyFun(twoLevelKey: any, callback: () => void): void;
     threeLevelKeyFun(threeLevelKey: any, callback: () => void): void;
-    getUserAll(user: User, page?: Number): void;
 }
 
 export interface SiderState {
@@ -35,6 +32,7 @@ class VSider extends React.Component<SiderProps, SiderState> {
     }
 
     onHandlerClick = (obj: any) => {
+        let { getListData }: any = this.props;
         let { key } = obj;
         this.setState({
             defaultSelectedKeys: String(key),
@@ -43,7 +41,7 @@ class VSider extends React.Component<SiderProps, SiderState> {
         let { apiList }: any = this.props;
         let api: any[] = getApiUtils(apiList, key, 0);
         if (api && api.length > 0) {
-            this.props.getUserAll({}, 0);
+            getListData(api[0]['path'], {}, 0);
         }
     }
 
@@ -104,7 +102,7 @@ const mapStateToProps = (state: any) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
     twoLevelKeyFun,
     threeLevelKeyFun,
-    getUserAll,
+    getListData
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(VSider);
