@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button } from 'antd';
+import { Modal, Button, message } from 'antd';
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { onModalCancel, addDataForm } from "@/page/redux/common";
@@ -24,6 +24,8 @@ export default (formRef: any) => (WrappedComponent: any) => {
                 let api: any[] = getApiUtils(apiList, threeLevelKey, 1);
                 if (api && api.length > 0) {
                     addDataForm(api[0]['path'], value)
+                } else {
+                    message.error('api接口不存在，请注册')
                 }
             })
         }

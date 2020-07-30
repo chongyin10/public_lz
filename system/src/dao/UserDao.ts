@@ -2,7 +2,7 @@ import { User } from '../models/User';
 import QuerySql from '../utils/SqlQuery';
 
 export default class UserDao extends User {
-    protected querySql = new QuerySql(this, 'user', 10);
+    protected querySql = new QuerySql()
     /**
      * 获取登录账户信息
      * @param name 
@@ -56,13 +56,12 @@ export default class UserDao extends User {
     }
 
     /**
-     * 获取所有用户信息
-     * @param user 
+     * 分页 获取用户
+     * @param search 
+     * @param page
      */
-    async getUserAll(user: any, page: Number,) {
-        let obj = await this.querySql.querySqlAll(user, page);
-        let objPage = await this.querySql.querySqlAll(user);
-        return { pageCount: objPage.length, list: obj };
+    async getUserAll(search: any, page: number,) {
+        return await this.querySql.queryLimitSql(User, search, page)
     }
 
     /**
@@ -73,11 +72,17 @@ export default class UserDao extends User {
         return await User.create(user)
     }
 
+    /**
+     * 删除用户
+     * @param id 主键id
+     */
     async delUser(id: Number) {
         return await User.destroy({
             where: {
                 id: Number(id)
             }
+        }).then((res) => {
+            return res
         })
     }
 }

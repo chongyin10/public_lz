@@ -3,6 +3,8 @@ import * as Api from '@/page/constants/api';
 import { initState, Action } from '@/page/redux/common/state';
 import { Dispatch } from 'redux';
 import { post } from '@/page/utils/request.tsx';
+import store from '@/page/redux/store';
+import { dataTrim } from '@/page/utils/common';
 
 /**
  * 初始化module列表数据
@@ -113,9 +115,10 @@ export function setSearchForm(searchForm: any) {
  * @param searchData 检索值
  * @param page 当前页码
  */
-export function getListData(api: string, searchData: any, page: Number = 0) {
+export function getListData(api: string, searchData: any, page: Number = 1) {
+    let _data = dataTrim(searchData);
     return (dispatch: Dispatch) => {
-        post(api, { page, data: searchData }).then((res: any) => {
+        post(api, { page, data: _data }).then((res: any) => {
             dispatch({
                 type: T.LIST_DATA,
                 payload: res
@@ -133,9 +136,11 @@ export function getListData(api: string, searchData: any, page: Number = 0) {
 export function updateDataForm(api: string, data: any) {
     return (dispatch: Dispatch) => {
         post(api, data).then((res: any) => {
+            let { RCom: { listData } }: any = store.getState();
+            let _listData = res.length == 0 ? listData : res;
             dispatch({
                 type: T.UPDATE_DATA,
-                payload: res
+                payload: _listData
             })
         })
     }
@@ -147,13 +152,15 @@ export function updateDataForm(api: string, data: any) {
  * @param data form数据表单
  */
 export function addDataForm(api: string, data: any) {
-    return async (dispatch: Dispatch) => {
-        await post(api, { data }).then((res: any) => {
+    return (dispatch: Dispatch) => {
+        let { RCom: { listData, currentPage } }: any = store.getState();
+        post(api, { data, page: currentPage }).then((res: any) => {
+            let _listData = res.length == 0 ? listData : res;
             dispatch({
                 type: T.ADD_DATA,
                 payload: {
                     addData: res,
-                    listData: res, // 更新list列表
+                    listData: _listData, // 更新list列表
                     modalVisible: res.length == 0 ? true : false  // 是否关闭modal
                 }
             })
@@ -167,16 +174,19 @@ export function addDataForm(api: string, data: any) {
  * @param id 主键id
  */
 export function deleteData(api: string, id: Number | string) {
-    return async (dispatch: Dispatch) => {
-        await post(api, { id }).then((res: any) => {
+    return (dispatch: Dispatch) => {
+        let { RCom: { listData, currentPage } }: any = store.getState();
+        post(api, { id, page: currentPage }).then((res: any) => {
+            let _listData = res.length == 0 ? listData : res;
             dispatch({
                 type: T.DEL_DATA,
                 payload: {
                     delData: res,
-                    listData: res, // 更新list列表
+                    listData: _listData, // 更新list列表
+                    currentPage: res['limit'] ? res['limit'] : currentPage // 返回的当前显示页码
                 }
             })
-        })
+        });
     }
 }
 
@@ -194,6 +204,18 @@ export function onModalCancel(modalVisible: Boolean) {
 }
 
 /**
+ * 初始化listData数据
+ */
+export function initListData() {
+    return async (dispatch: Dispatch) => {
+        await dispatch({
+            type: T.INIT_LIST_DATA,
+            payload: []
+        })
+    }
+}
+
+/**
  * 设置当前页码
  * @param currentPage 
  */
@@ -205,6 +227,19 @@ export function setCurrentPage(currentPage: Number) {
         })
     }
 }
+
+// export function getModuleByLevel(level: number) {
+//     return (dispatch: Dispatch) => {
+//         post(api, data).then((res: any) => {
+//             let { RCom: { listData } }: any = store.getState();
+//             let _listData = res.length == 0 ? listData : res;
+//             dispatch({
+//                 type: T.UPDATE_DATA,
+//                 payload: _listData
+//             })
+//         })
+//     }
+// }
 
 
 export default function (state = initState, action: Action) {
@@ -276,6 +311,7 @@ export default function (state = initState, action: Action) {
                 ...state,
                 delData: action.payload.delData,
                 listData: action.payload.listData,
+                currentPage: action.payload.currentPage
             }
         case T.CURRENT_PAGE:
             return {
@@ -283,6 +319,11 @@ export default function (state = initState, action: Action) {
                 currentPage: action.payload
             }
         case T.LIST_DATA:
+            return {
+                ...state,
+                listData: action.payload
+            }
+        case T.INIT_LIST_DATA:
             return {
                 ...state,
                 listData: action.payload

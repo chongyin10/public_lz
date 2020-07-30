@@ -9,6 +9,7 @@ export interface Api {
     path?: string;
     moduleid?: Number;
     type?: Number;
+    system?: number;
     createTime?: string;
 }
 

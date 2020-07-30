@@ -6,7 +6,7 @@ import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setSearchForm, onModalCancel, setCurrentPage, getListData, deleteData } from "@/page/redux/common";
 import { getApiUtils } from "@/page/utils/common";
-import { PoweroffOutlined, EditTwoTone, DeleteTwoTone, FileAddTwoTone } from '@ant-design/icons';
+import { FileAddTwoTone } from '@ant-design/icons';
 import '@/page/common/base/index.scss';
 
 export interface ComponentsMapProps {
@@ -35,6 +35,14 @@ class ComponentsMap extends React.Component<ComponentsMapProps, ComponentsMapSta
         }
     }
 
+    handleFinish = (data: any) => {
+        let { threeLevelKey, apiList, getListData }: any = this.props;
+        let api: any[] = getApiUtils(apiList, threeLevelKey, 0);
+        if (api && api.length > 0) {
+            getListData(api[0]['path'], data, 1);
+        }
+    }
+
     render() {
         let { pageCount, currentPage, pageSize,
             setSearchForm, setCurrentPage, getListData,
@@ -43,7 +51,7 @@ class ComponentsMap extends React.Component<ComponentsMapProps, ComponentsMapSta
             <div className='componentsMap'>
                 <SearchForm
                     searchForm={this.props.searchForm}
-                    onFinish={getListData}
+                    onFinish={this.handleFinish.bind(this)}
                     setSearchForm={setSearchForm}
                     setCurrentPage={setCurrentPage}
                 />

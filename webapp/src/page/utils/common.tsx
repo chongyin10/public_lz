@@ -41,3 +41,18 @@ export function uuid(len?: any, radix?: any) {
 
     return uuid.join('');
 }
+
+/**
+ * 判断是否存在空格
+ * @param data 数据值
+ */
+export function dataTrim(data: any) {
+    for (let key in data) {
+        if (data[key] && data[key] != '') {
+            data[key] = data[key].toString().trim();
+        } else {
+            data[key] = undefined;
+        }
+    }
+    return data
+}

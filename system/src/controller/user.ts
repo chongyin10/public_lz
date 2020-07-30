@@ -22,7 +22,7 @@ user.post(API.getUserAll, async (req, res, next) => {
  */
 user.post(API.addUser, async (req, res, next) => {
     try {
-        let result = await userService.addUser(req.body["data"]);
+        let result = await userService.addUser(req.body["data"], req.body["page"]);
         res.json(result);
     } catch (e) {
         next(e);
@@ -34,7 +34,7 @@ user.post(API.addUser, async (req, res, next) => {
  */
 user.post(API.delUser, async (req, res, next) => {
     try {
-        res.json(await userService.delUser(req.body["id"]));
+        res.json(await userService.delUser(req.body["id"], req.body["page"]));
     } catch (e) {
         next(e);
     }

@@ -11,6 +11,10 @@ export const delUser = '/delUser'; // 删除用户
 
 export const getApiAll = '/getApiAll';
 
+export const getApiList = '/getApiList';
+export const addApi = '/addApi';
+export const delApi = '/delApi';
+
 
 
 

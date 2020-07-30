@@ -1,4 +1,4 @@
-import { Model, Column, Table, PrimaryKey, AutoIncrement } from "sequelize-typescript";
+import { Model, Column, Table, PrimaryKey, AutoIncrement, Default } from "sequelize-typescript";
 
 @Table({
     tableName: 'api',
@@ -21,12 +21,19 @@ export class Api extends Model<Api> {
     @Column
     path?: string;
 
+    @Default(null)
     @Column
     moduleid?: Number;
 
+    @Default(0)
     @Column
-    type?: Number;
+    system?: number;
 
+    @Default((value: any) => Number(value))
+    @Column
+    type?: number;
+
+    @Default(new Date())
     @Column
     createTime?: Date
 }

@@ -1,9 +1,9 @@
 import React from "react";
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, message } from 'antd';
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { NavLink } from "react-router-dom";
-import { twoLevelKeyFun, threeLevelKeyFun, getListData } from "@/page/redux/common";
+import { twoLevelKeyFun, threeLevelKeyFun, getListData, initListData, setCurrentPage } from "@/page/redux/common";
 import { getApiUtils } from "@/page/utils/common";
 
 const { SubMenu } = Menu;
@@ -32,7 +32,8 @@ class VSider extends React.Component<SiderProps, SiderState> {
     }
 
     onHandlerClick = (obj: any) => {
-        let { getListData }: any = this.props;
+        let { getListData, initListData, setCurrentPage }: any = this.props;
+        setCurrentPage(1);
         let { key } = obj;
         this.setState({
             defaultSelectedKeys: String(key),
@@ -41,7 +42,10 @@ class VSider extends React.Component<SiderProps, SiderState> {
         let { apiList }: any = this.props;
         let api: any[] = getApiUtils(apiList, key, 0);
         if (api && api.length > 0) {
-            getListData(api[0]['path'], {}, 0);
+            getListData(api[0]['path'], {}, 1);
+        } else {
+            initListData();
+            message.error('api接口不存在！');
         }
     }
 
@@ -49,7 +53,7 @@ class VSider extends React.Component<SiderProps, SiderState> {
         this.setState({
             defaultOpenKeys: String(key)
         })
-        this.props.twoLevelKeyFun(key, () => { })
+        this.props.twoLevelKeyFun(key, () => { });
     }
 
     htmlSiderMenu = () => {
@@ -98,11 +102,14 @@ const mapStateToProps = (state: any) => ({
     twoLevelKey: state.RCom.twoLevelKey,
     threeLevelKey: state.RCom.threeLevelKey,
     apiList: state.RCom.apiList,
+    listData: state.RCom.listData,
 });
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
     twoLevelKeyFun,
     threeLevelKeyFun,
-    getListData
+    getListData,
+    initListData,
+    setCurrentPage
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(VSider);

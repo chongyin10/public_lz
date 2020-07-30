@@ -20,24 +20,18 @@ export interface TableMapProps {
 }
 
 export interface TableMapState {
-    defCurrentPage: any;
 }
 
 class TableMap extends React.Component<TableMapProps, TableMapState> {
 
     constructor(props: TableMapProps) {
         super(props);
-        this.state = {
-            defCurrentPage: 1,
-        }
+
     }
 
     handlePage = (currentPage: Number) => {
         this.props.setCurrentPage(currentPage);
-        this.props.handlePage(Number(currentPage) - 1);
-        this.setState({
-            defCurrentPage: currentPage
-        })
+        this.props.handlePage(Number(currentPage));
     }
 
     handlerConfirm = (text: any, event: any) => {
@@ -70,8 +64,7 @@ class TableMap extends React.Component<TableMapProps, TableMapState> {
     }
 
     render() {
-        let { pageSize, dataSource, actionOption, columns }: any = this.props;
-
+        let { pageSize, dataSource, actionOption, columns, currentPage }: any = this.props;
         return (
             <Table
                 rowKey={(recode: any) => recode["id"]}
@@ -89,7 +82,7 @@ class TableMap extends React.Component<TableMapProps, TableMapState> {
                     responsive: true,
                     showSizeChanger: false,
                     showQuickJumper: true,
-                    current: parseInt(this.state.defCurrentPage),
+                    current: parseInt(currentPage),
                     pageSize: parseInt(pageSize),
                     total: parseInt(dataSource['pageCount']),
                     showTotal: (total, range) => {
