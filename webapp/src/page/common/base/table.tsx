@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Tag, Space, Button, Divider, Popconfirm } from 'antd';
+import { Table, Tag, Space, Button, Divider, Popconfirm, message } from 'antd';
 
 import '@/page/common/base/table.scss';
 import { getApiUtils } from "@/page/utils/common";
@@ -17,6 +17,8 @@ export interface TableMapProps {
     handlePage(currentPage: Number): void;
     setCurrentPage(currentPage: Number): void;
     deleteData(api: string, id: string | Number): void;
+    getDataByIdForm(api: string, id: number | string): void;
+    setIds(id: any): void;
 }
 
 export interface TableMapState {
@@ -43,7 +45,14 @@ class TableMap extends React.Component<TableMapProps, TableMapState> {
     }
 
     handleUpdataForm = (data: any) => {
-        debugger
+        let { threeLevelKey, apiList, setIds}: any = this.props;
+        let api: any[] = getApiUtils(apiList, threeLevelKey, 2);
+        if (api && api.length > 0) {
+            setIds(data["id"]);
+            this.props.getDataByIdForm(api[0]['path'], Number(data["id"]));
+        } else {
+            message.info('接口未注册')
+        }
     }
 
     actions = {

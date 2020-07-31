@@ -9,6 +9,7 @@ import { login } from './controller/login';
 import { module } from './controller/module';
 import { user } from './controller/user';
 import { api } from './controller/api';
+import { table } from './controller/table';
 
 export const app = express();
 app.use(httpLogger);
@@ -43,7 +44,8 @@ app.use('/login', login);
 app.use('/module', module);
 app.use('/system', user);
 app.use('/api', api);
-app.use('/system', api)
+app.use('/system', api);
+app.use('/system', table)
 
 console.log(`@运行环境为：${process.env.NODE_ENV}`)
 

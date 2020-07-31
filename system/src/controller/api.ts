@@ -49,6 +49,24 @@ api.post(API.delApi, async (req, res, next) => {
     }
 });
 
+/**
+ * 单个数据集
+ */
+api.post(API.getApiById, async (req, res, next) => {
+    try {
+        res.json(await apiService.getApiById(req.body["id"]));
+    } catch (e) {
+        next(e);
+    }
+});
 
-
-
+/**
+ * 更新
+ */
+api.post(API.updateApi, async (req, res, next) => {
+    try {
+        res.json(await apiService.updateApi(req.body["data"], req.body["id"], req.body["page"]));
+    } catch (e) {
+        next(e);
+    }
+})

@@ -51,8 +51,9 @@ export default class UserDao extends User {
      * @param id 
      */
     async getUserById(id: Number) {
-        let user = await User.findByPk(Number(id));
-        return user;
+        return await User.findByPk(Number(id)).then(result => {
+            return result;
+        });
     }
 
     /**
@@ -84,5 +85,13 @@ export default class UserDao extends User {
         }).then((res) => {
             return res
         })
+    }
+
+    /**
+     * 
+     */
+    async updateUser(data: any, id: number) {
+        data.id = id;
+        return await User.upsert(data);
     }
 }

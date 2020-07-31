@@ -86,6 +86,51 @@ export default class ApiService {
      */
     async getApiByIdAndSystem(id: number, system: number) {
         const apiDao = new ApiDao();
-        return await apiDao.getApiByIdAndSystem(id, system);
+        try {
+            return await apiDao.getApiByIdAndSystem(id, system);
+        } catch (error) {
+            return []
+        }
+
+    }
+
+    /**
+     * 根据主键获取数据
+     * @param id 
+     */
+    async getApiById(id: number) {
+        const apiDao = new ApiDao();
+        try {
+            let result = await apiDao.getApiById(id);
+            if (result) {
+                return await resultUtils(true, '成功', { list: result });
+            } else {
+                return await resultUtils(true, '失败', []);
+            }
+        } catch (error) {
+            return await resultUtils(true, 'system获取失败', []);
+        }
+    }
+
+    /**
+     * 修改数据
+     * @param data 
+     * @param id 
+     */
+    async updateApi(data: any, id: number, page: number) {
+        const apiDao = new ApiDao();
+        let apiList: any = [];
+        try {
+            let result = await apiDao.updateApi(data, id);
+            console.log('@result:', result)
+            if (!result) {
+                apiList = await apiDao.getApiList({}, Number(page));
+                return await resultUtils(true, '修改api成功', apiList);
+            } else {
+                return await resultUtils(true, '修改api失败', apiList);
+            }
+        } catch (error) {
+            return await resultUtils(false, '系统内部错误', apiList)
+        }
     }
 }

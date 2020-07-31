@@ -2,7 +2,7 @@ import React from "react";
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ComponentsMap from '@/page/common/base';
-import AddApi from '@/page/components/system/api/addApi';
+import ApiMap from '@/page/components/system/api/ApiMap';
 import '@/page/components/system/api/index.scss';
 import { apiSearchForm } from '@/page/searchForm';
 import { Tag } from "antd";
@@ -39,7 +39,7 @@ class Api extends React.Component<IProps, IState> {
             render: (text: any) => text,
         },
         {
-            title: '是否系统接口',
+            title: '系统接口',
             dataIndex: 'system',
             key: 'system',
             width: '10%',
@@ -55,7 +55,9 @@ class Api extends React.Component<IProps, IState> {
             render: (text: any) => {
                 switch (text) {
                     case 0:
-                        return <Tag color='geekblue' key={text}>查询</Tag>
+                        return <Tag color='geekblue' key={text}>分页查询</Tag>
+                    case 2:
+                        return <Tag color='cyan' key={text}>ID添加</Tag>
                     case 1:
                         return <Tag color='green' key={text}>添加</Tag>
                     case 3:
@@ -81,7 +83,7 @@ class Api extends React.Component<IProps, IState> {
     ]
 
     render() {
-        let { listData, modalVisible }: any = this.props;
+        let { listData, modalVisible, data: { list } }: any = this.props;
         return (
             <div className='user-index' >
                 <ComponentsMap
@@ -89,8 +91,9 @@ class Api extends React.Component<IProps, IState> {
                     columns={this.columns}
                     dataSource={listData}
                     actionOption={this.btnActions}
+                    btnAction="注册"
                 />
-                {modalVisible ? <AddApi modleTitle='添加用户组' /> : ""}
+                {modalVisible ? <ApiMap modleTitle={(list ? '修改' : "添加") + "Api"} /> : ""}
             </div >
         );
     }
@@ -99,6 +102,7 @@ class Api extends React.Component<IProps, IState> {
 const mapStateToProps = (state: any) => ({
     listData: state.RCom.listData,
     modalVisible: state.RCom.modalVisible,
+    data: state.RCom.data,
 });
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
 }, dispatch)

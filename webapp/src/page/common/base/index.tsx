@@ -4,7 +4,7 @@ import SearchForm from '@/page/common/base/searchForm';
 import Table from '@/page/common/base/table'
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setSearchForm, onModalCancel, setCurrentPage, getListData, deleteData } from "@/page/redux/common";
+import { setSearchForm, onModalCancel, setCurrentPage, getListData, deleteData, getDataByIdForm, initData, setIds } from "@/page/redux/common";
 import { getApiUtils } from "@/page/utils/common";
 import { FileAddTwoTone } from '@ant-design/icons';
 import '@/page/common/base/index.scss';
@@ -13,7 +13,8 @@ export interface ComponentsMapProps {
     dataSource: any;
     columns: any;
     searchForm: any;
-    actionOption?: any
+    actionOption?: any;
+    btnAction?: string;
 }
 
 export interface ComponentsMapState {
@@ -23,7 +24,8 @@ export interface ComponentsMapState {
 class ComponentsMap extends React.Component<ComponentsMapProps, ComponentsMapState> {
 
     handlerClick = (event: any) => {
-        let { onModalCancel }: any = this.props;
+        let { onModalCancel, initData }: any = this.props;
+        initData();
         onModalCancel(true);
     }
 
@@ -45,7 +47,7 @@ class ComponentsMap extends React.Component<ComponentsMapProps, ComponentsMapSta
 
     render() {
         let { pageCount, currentPage, pageSize,
-            setSearchForm, setCurrentPage, getListData,
+            setSearchForm, setCurrentPage, getDataByIdForm, setIds,
             threeLevelKey, apiList, deleteData }: any = this.props;
         return (
             <div className='componentsMap'>
@@ -55,7 +57,9 @@ class ComponentsMap extends React.Component<ComponentsMapProps, ComponentsMapSta
                     setSearchForm={setSearchForm}
                     setCurrentPage={setCurrentPage}
                 />
-                <Button onClick={this.handlerClick} icon={<FileAddTwoTone />} style={{ margin: '5px 0px', borderRadius: "10" }}>添加</Button>
+                <Button onClick={this.handlerClick} icon={<FileAddTwoTone />} style={{ margin: '5px 0px', borderRadius: "10" }}>
+                    {this.props.btnAction ? this.props.btnAction : '添加'}
+                </Button>
                 <Table
                     columns={this.props.columns}
                     dataSource={this.props.dataSource}
@@ -68,6 +72,8 @@ class ComponentsMap extends React.Component<ComponentsMapProps, ComponentsMapSta
                     apiList={apiList}
                     deleteData={deleteData}
                     actionOption={this.props.actionOption}
+                    getDataByIdForm={getDataByIdForm}
+                    setIds={setIds}
                 />
             </div>
         );
@@ -86,7 +92,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
     onModalCancel,
     setCurrentPage,
     getListData,
-    deleteData
+    deleteData,
+    getDataByIdForm,
+    initData,
+    setIds
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(ComponentsMap);

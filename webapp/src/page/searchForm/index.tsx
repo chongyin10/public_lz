@@ -31,3 +31,10 @@ export const apiSearchForm = [
         label: 'api名称',
     }
 ]
+
+export const tableSearchForm = [
+    {
+        name: 'tableName',
+        label: '表名称',
+    }
+]

@@ -13,6 +13,8 @@ export type State = {
     modalVisible: Boolean;
 
     listData: any;
+    data: any; // 单条数据
+    ids: any; // ids
     updateData: Boolean;  // 是否更新成功
     addData: Boolean;  // 新增状态
     delData: Boolean;  // 删除状态
@@ -32,8 +34,10 @@ export const initState: State = {
     threeLevelKey: undefined,
     searchForm: undefined,
     modalVisible: false,
-    
+
     listData: [],
+    data: [],
+    ids: undefined,
     updateData: false,
     addData: false,
     delData: false,

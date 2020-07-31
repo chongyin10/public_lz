@@ -4,7 +4,7 @@ import FormUser from '@/page/components/system/user/formUser';
 import { FormInstance } from "antd/lib/form";
 
 export interface AddUserProps {
-
+    data?: any;
 }
 
 export interface AddUserState {
@@ -17,7 +17,7 @@ class AddUser extends React.Component<AddUserProps, AddUserState> {
     render() {
         return (
             <div className='adduser-index'>
-                <FormUser formRef={formRef} />
+                <FormUser formRef={formRef} data={this.props.data}/>
             </div>
         );
     }

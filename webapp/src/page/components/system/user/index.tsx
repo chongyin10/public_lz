@@ -3,7 +3,7 @@ import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ComponentsMap from '@/page/common/base';
 import { dateFormat } from "@/page/utils/date";
-import AddUser from '@/page/components/system/user/addUser';
+import UserMap from '@/page/components/system/user/userMap';
 import '@/page/components/system/user/index.scss';
 import { userSearchForm } from '@/page/searchForm';
 export interface UserProps {
@@ -61,8 +61,7 @@ class User extends React.Component<UserProps, UserState> {
     ]
 
     render() {
-        let { listData, modalVisible }: any = this.props;
-
+        let { listData, modalVisible, data: { list } }: any = this.props;
         return (
             <div className='user-index' >
                 <ComponentsMap
@@ -71,7 +70,7 @@ class User extends React.Component<UserProps, UserState> {
                     dataSource={listData}
                     actionOption={this.btnActions}
                 />
-                {modalVisible ? <AddUser modleTitle='添加用户' /> : ""}
+                {modalVisible ? <UserMap modleTitle={(list ? '修改' : "添加") + "用户"} /> : ""}
             </div >
         );
     }
@@ -80,6 +79,7 @@ class User extends React.Component<UserProps, UserState> {
 const mapStateToProps = (state: any) => ({
     listData: state.RCom.listData,
     modalVisible: state.RCom.modalVisible,
+    data: state.RCom.data,
 });
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
 }, dispatch)

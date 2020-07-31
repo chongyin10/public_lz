@@ -110,13 +110,32 @@ export default class UserService {
                     userList = await userDao.getUserAll({}, Number(page) - 1); // 查询前一页数据
                     userList.limit = Number(page) - 1;
                 }
-                console.log('@userList.limit:',userList.limit)
                 return await resultUtils(true, '删除成功', userList);
             } else {
                 return await resultUtils(true, '删除失败', []);
             }
         } catch (error) {
             return await resultUtils(false, '系统用户无法删除', [])
+        }
+    }
+
+    /**
+     * 更新数据
+     * @param data 
+     */
+    async updateUser(data: any, id: number, page: number) {
+        const userDao = new UserDao();
+        let userList: any = [];
+        try {
+            let result = await userDao.updateUser(data, id);
+            if (!result) {
+                userList = await userDao.getUserAll({}, Number(page));
+                return await resultUtils(true, '修改成功', userList);
+            } else {
+                return await resultUtils(true, '修改成功', userList);
+            }
+        } catch (error) {
+            return await resultUtils(false, '系统内部错误', userList)
         }
     }
 

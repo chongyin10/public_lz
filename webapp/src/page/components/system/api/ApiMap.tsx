@@ -4,7 +4,7 @@ import FormApi from '@/page/components/system/api/formApi';
 import { FormInstance } from "antd/lib/form";
 
 export interface AddApiProps {
-
+    data?: any;
 }
 
 export interface AddApiState {
@@ -17,7 +17,7 @@ class AddApi extends React.Component<AddApiProps, AddApiState> {
     render() {
         return (
             <div className='AddApi-index'>
-                <FormApi formRef={formRef} />
+                <FormApi formRef={formRef} data={this.props.data}/>
             </div>
         );
     }

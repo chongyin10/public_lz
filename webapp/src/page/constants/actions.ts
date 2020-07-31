@@ -29,6 +29,8 @@ export const MODAL_VISIBLE = 'MODAL_VISIBLE'
 export const INIT_LIST_DATA = 'INIT_LIST_DATA'; // 初始化listdata数据
 
 export const LIST_DATA = 'LIST_DATA'; // list数据集
+export const DATA = 'DATA'; // 单数据
+export const IDS = 'IDS'; // 设置id
 export const UPDATE_DATA = 'UPDATE_DATA'; // 更新数据
 export const ADD_DATA = 'ADD_DATA'; // 新增数据
 export const DEL_DATA = 'DEL_DATA'; // 删除数据

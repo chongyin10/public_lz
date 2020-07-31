@@ -3,7 +3,7 @@ import { Layout, Menu, message } from 'antd';
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { NavLink } from "react-router-dom";
-import { twoLevelKeyFun, threeLevelKeyFun, getListData, initListData, setCurrentPage } from "@/page/redux/common";
+import { twoLevelKeyFun, threeLevelKeyFun, getListData, initListData, setCurrentPage, setSearchForm, setIds } from "@/page/redux/common";
 import { getApiUtils } from "@/page/utils/common";
 
 const { SubMenu } = Menu;
@@ -32,8 +32,11 @@ class VSider extends React.Component<SiderProps, SiderState> {
     }
 
     onHandlerClick = (obj: any) => {
-        let { getListData, initListData, setCurrentPage }: any = this.props;
-        setCurrentPage(1);
+        let { getListData, initListData, setCurrentPage, setSearchForm }: any = this.props;
+        setCurrentPage(1);  // 初始化页码
+        initListData(); // 初始化listData数据
+        setSearchForm([]);
+        setIds(undefined);
         let { key } = obj;
         this.setState({
             defaultSelectedKeys: String(key),
@@ -44,7 +47,6 @@ class VSider extends React.Component<SiderProps, SiderState> {
         if (api && api.length > 0) {
             getListData(api[0]['path'], {}, 1);
         } else {
-            initListData();
             message.error('api接口不存在！');
         }
     }
@@ -109,7 +111,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
     threeLevelKeyFun,
     getListData,
     initListData,
-    setCurrentPage
+    setCurrentPage,
+    setSearchForm,
+    setIds
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(VSider);

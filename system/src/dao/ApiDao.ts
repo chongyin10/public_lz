@@ -60,4 +60,24 @@ export default class ApiDao extends Api {
             return result
         })
     }
+
+    /**
+     * 
+     * @param id 
+     */
+    async getApiById(id: number) {
+        return await Api.findByPk(id).then(result => {
+            return result;
+        });
+    }
+
+    /**
+     * 
+     * @param data 
+     * @param id 
+     */
+    async updateApi(data: any, id: number) {
+        data.id = id;
+        return await Api.upsert(data);
+    }
 }

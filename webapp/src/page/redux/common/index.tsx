@@ -132,15 +132,39 @@ export function getListData(api: string, searchData: any, page: Number = 1) {
  * 更新操作
  * @param api 接口api
  * @param data form数据表单
+ * @param id 更新主键id
  */
-export function updateDataForm(api: string, data: any) {
+export function updateDataForm(api: string, data: any, id: number | string, page: number) {
     return (dispatch: Dispatch) => {
-        post(api, data).then((res: any) => {
+        post(api, { data, id, page }).then((res: any) => {
             let { RCom: { listData } }: any = store.getState();
             let _listData = res.length == 0 ? listData : res;
             dispatch({
                 type: T.UPDATE_DATA,
-                payload: _listData
+                payload: {
+                    updateData: res,
+                    listData: _listData, // 更新list列表
+                    modalVisible: res ? false : true  // 是否关闭modal
+                }
+            })
+        })
+    }
+}
+
+/**
+ * 获取单数据集
+ * @param api 
+ * @param data 
+ */
+export function getDataByIdForm(api: string, id: number | string) {
+    return (dispatch: Dispatch) => {
+        post(api, { id }).then((res: any) => {
+            dispatch({
+                type: T.DATA,
+                payload: {
+                    data: res,
+                    modalVisible: res.length == 0 ? false : true  // 是否关闭modal
+                }
             })
         })
     }
@@ -216,6 +240,20 @@ export function initListData() {
 }
 
 /**
+ * 初始化data数据集
+ */
+export function initData() {
+    return (dispatch: Dispatch) => {
+        dispatch({
+            type: T.DATA,
+            payload: {
+                data: []
+            }
+        })
+    }
+}
+
+/**
  * 设置当前页码
  * @param currentPage 
  */
@@ -224,6 +262,19 @@ export function setCurrentPage(currentPage: Number) {
         await dispatch({
             type: T.CURRENT_PAGE,
             payload: currentPage
+        })
+    }
+}
+
+/**
+ * 设置id
+ * @param ids 主键id
+ */
+export function setIds(ids: any) {
+    return (dispatch: Dispatch) => {
+        dispatch({
+            type: T.IDS,
+            payload: ids
         })
     }
 }
@@ -297,7 +348,17 @@ export default function (state = initState, action: Action) {
         case T.UPDATE_DATA:
             return {
                 ...state,
-                updateData: action.payload
+                updateData: action.payload.updateData,
+                listData: action.payload.listData,
+                modalVisible: action.payload.modalVisible,
+                data: [],
+                ids: undefined
+            }
+        case T.DATA:
+            return {
+                ...state,
+                data: action.payload.data,
+                modalVisible: action.payload.modalVisible
             }
         case T.ADD_DATA:
             return {
@@ -327,6 +388,11 @@ export default function (state = initState, action: Action) {
             return {
                 ...state,
                 listData: action.payload
+            }
+        case T.IDS:
+            return {
+                ...state,
+                ids: action.payload
             }
         default:
             return {
