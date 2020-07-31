@@ -57,7 +57,7 @@ class Api extends React.Component<IProps, IState> {
                     case 0:
                         return <Tag color='geekblue' key={text}>分页查询</Tag>
                     case 2:
-                        return <Tag color='cyan' key={text}>ID添加</Tag>
+                        return <Tag color='cyan' key={text}>主键查询</Tag>
                     case 1:
                         return <Tag color='green' key={text}>添加</Tag>
                     case 3:

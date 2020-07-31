@@ -113,7 +113,7 @@ class FormApi extends React.Component<IProps, IState> {
                                 className='api-select-option'
                             >
                                 <Option value={0}>分页查询</Option>
-                                <Option value={2}>ID查询</Option>
+                                <Option value={2}>主键查询</Option>
                                 <Option value={1}>添加</Option>
                                 <Option value={3}>删除</Option>
                                 <Option value={4}>更新</Option>
