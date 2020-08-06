@@ -1,27 +1,15 @@
 import React from 'react';
 import { Switch, Route } from "react-router-dom";
-
 import contentRouter from '@/page/router/routerMap';
 
-export interface ContentRouterProps {
+export default function ContentRouter() {
+    return (
+        <Switch>
+            {contentRouter.map((item, index) => {
+                return <Route key={index} path={item.path} render={() => (
+                    <item.component />
+                )} />
+            })}
+        </Switch>
+    );
 }
-
-export interface ContentRouterState {
-
-}
-
-class ContentRouter extends React.Component<ContentRouterProps, ContentRouterState> {
-    render() {
-        return (
-            <Switch>
-                {contentRouter.map((item, index) => {
-                    return <Route key={index} path={item.path} render={() => (
-                        <item.component />
-                    )} />
-                })}
-            </Switch>
-        );
-    }
-}
-
-export default ContentRouter;
