@@ -17,9 +17,9 @@ export interface AppState {
 
 class App extends React.Component<AppProps, AppState> {
 
-    async UNSAFE_componentWillMount() {
-        await this.props.onGetModules(); // 获取module
-        await this.props.onGetApi(); // 获取接口api
+    UNSAFE_componentWillMount() {
+        this.props.onGetModules(); // 获取module
+        this.props.onGetApi(); // 获取接口api
     }
 
     render() {
@@ -31,14 +31,10 @@ class App extends React.Component<AppProps, AppState> {
     }
 }
 
-const mapStateToProps = (state: any) => ({
-
-});
-
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
     onGetModules: getModules,
     onGetApi: getApiAll,
     spinLoading,
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect((state: any) => ({}), mapDispatchToProps)(App);

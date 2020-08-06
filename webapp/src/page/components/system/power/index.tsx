@@ -1,25 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 
-export interface PowerProps {
+export default function Example() {
+    const [a, setA] = useState((() => {
+        return 3
+    }));
+    const [b, setB] = useState(-1);
 
-}
+    useEffect(() => {
+        document.title = `You clicked ${a} times`;
+    }, [a]);
 
-export interface PowerState {
+    useEffect(() => {
+        document.title = `You clicked ${b} times`;
+    }, [b]);
 
-}
-
-class Power extends React.Component<PowerProps, PowerState> {
-    constructor(props: PowerProps) {
-        super(props);
-        this.state = {};
+    const handleClickA = () => {
+        setA(a + 1);
     }
-    render() {
-        return (
-            <div>
-                Power
-            </div>
-        );
-    }
-}
 
-export default Power;
+    return (
+        <div>
+            <h1> hook写法应用 </h1>
+            <p>You clicked {a} times</p>
+            <button onClick={handleClickA}>
+                Click a
+            </button>
+            <p>You clicked {b} times</p>
+            <button onClick={() => setB(b - 1)}>
+                Click b
+            </button>
+        </div>
+    );
+}

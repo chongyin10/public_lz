@@ -87,7 +87,7 @@ class TableMap extends React.Component<TableMapProps, TableMapState> {
                 }}
                 className='row-table-line'
                 pagination={{
-                    onChange: this.handlePage.bind(this),
+                    onChange: this.handlePage.bind(this), // 一般都在构造函数进行bind绑定，这样便于初始化，有时候过于麻烦就直接这样写了
                     responsive: true,
                     showSizeChanger: false,
                     showQuickJumper: true,

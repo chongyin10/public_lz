@@ -29,6 +29,7 @@ class ComponentsMap extends React.Component<ComponentsMapProps, ComponentsMapSta
         onModalCancel(true);
     }
 
+    // 此处可以封装
     handlePage = (currentPage: Number) => {
         let { threeLevelKey, apiList, getListData, searchFormData }: any = this.props;
         let api: any[] = getApiUtils(apiList, threeLevelKey, 0);
@@ -58,7 +59,7 @@ class ComponentsMap extends React.Component<ComponentsMapProps, ComponentsMapSta
                     setCurrentPage={setCurrentPage}
                 />
                 <Button onClick={this.handlerClick} icon={<FileAddTwoTone />} style={{ margin: '5px 0px', borderRadius: "10" }}>
-                    {this.props.btnAction ? this.props.btnAction : '添加'}
+                    {this.props.btnAction || '添加'}
                 </Button>
                 <Table
                     columns={this.props.columns}

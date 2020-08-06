@@ -43,7 +43,7 @@ export function uuid(len?: any, radix?: any) {
 }
 
 /**
- * 判断是否存在空格
+ * 去除字符串空格
  * @param data 数据值
  */
 export function dataTrim(data: any) {

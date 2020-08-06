@@ -38,6 +38,7 @@ module.exports = {
                     {
                         loader: 'css-loader', // 解析 @import 和 url() 为 import/require() 方式处理
                         options: {
+                            includePaths: ['./node_modules/normalize.css'],
                             importLoaders: 1 // 0 => 无 loader(默认); 1 => postcss-loader; 2 => postcss-loader, sass-loader
                         }
                     },

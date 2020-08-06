@@ -56,7 +56,7 @@ export default (formRef: any) => (WrappedComponent: any) => {
                     cancelText="取消"
                     okText="确定"
                 >
-                    <WrappedComponent {...this.props} />
+                    <WrappedComponent {...this.props} /> { /* 不建议用...props写法，影响性能，diff算法 */}
                 </Modal>
             );
         }
