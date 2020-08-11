@@ -4,4 +4,4 @@
 2. system 简单的后端微服务架构(无事务)，应用基本技术：nodejs(koa) + typeScript-sequlize
 3. 数据库：mysql, 建议用命令窗口执行，用工具存在编码转换问题存在的可能；
 
-目前架构不完善, 正在扩展基础。后期计划，node建作为中间服务层，服务端Model交给java开发，尝试serverless
+目前架构不完善, 正在扩展基础。后期计划，node将作为中间层，服务端Model交给java开发，尝试serverless
