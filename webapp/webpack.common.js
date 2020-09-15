@@ -3,7 +3,9 @@ const SRC_PATH = path.join(__dirname, './src');
 const theme = require('./theme.js');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-const { APP_ENV } = require('./config/env.js');
+const {
+    APP_ENV
+} = require('./config/env.js');
 
 module.exports = {
     entry: {
@@ -17,8 +19,7 @@ module.exports = {
     },
 
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: ['babel-loader', 'eslint-loader'],
@@ -26,12 +27,13 @@ module.exports = {
             },
             {
                 test: /\.(j|t)s(x)?$/,
-                include: [SRC_PATH],
+                include: SRC_PATH,
                 use: ['babel-loader', 'eslint-loader'],
                 exclude: /node_modules/
             },
             {
-                test: /\.css$/, // 正则匹配文件路径
+                test: /\.css$/i, // 正则匹配文件路径
+                exclude: /\.module\.css$/,
                 // exclude: /node_modules/,
                 use: [
                     APP_ENV !== 'dev' ? MiniCssExtractPlugin.loader : 'style-loader',
@@ -46,8 +48,26 @@ module.exports = {
                 ]
             },
             {
+                test: /\.module\.css$/, // 正则匹配文件路径
+                include: SRC_PATH,
+                exclude: /node_modules/,
+                use: [
+                    APP_ENV !== 'dev' ? MiniCssExtractPlugin.loader : 'style-loader',
+                    {
+                        loader: 'css-loader', // 解析 @import 和 url() 为 import/require() 方式处理
+                        options: {
+                            modules: {
+                                localIdentName: '[name]_[local]-[hash:6]'
+                            }
+                        }
+                    },
+                    'postcss-loader'
+                ]
+            },
+            {
                 test: /\.scss$/,
                 include: SRC_PATH,
+                exclude: /\.module\.scss$/,
                 use: [
                     APP_ENV !== 'dev' ? MiniCssExtractPlugin.loader : 'style-loader',
                     'css-loader',
@@ -62,17 +82,34 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(png|jpg|gif|svg)(\?.*)?$/,
+                test: /\.module\.scss$/,
+                include: SRC_PATH,
+                exclude: /node_modules/,
                 use: [
+                    APP_ENV !== 'dev' ? MiniCssExtractPlugin.loader : 'style-loader',
                     {
-                        loader: 'file-loader',
-                        options: {
-                            //1024 == 1kb  
-                            //小于10kb时打包成base64编码的图片否则单独打包成图片
-                            limit: 10240,
-                            name: path.join('./img/[name].[hash:7].[ext]')
+                        loader: 'css-loader',
+                        options:{
+                            modules:{
+                                localIdentName: '[name]_[local]-[hash:6]'
+                            }
                         }
-                    }]
+                    },
+                    'postcss-loader',
+                    'sass-loader'
+                ]
+            },
+            {
+                test: /\.(png|jpg|gif|svg)(\?.*)?$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        //1024 == 1kb  
+                        //小于10kb时打包成base64编码的图片否则单独打包成图片
+                        limit: 10240,
+                        name: path.join('./img/[name].[hash:7].[ext]')
+                    }
+                }]
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,

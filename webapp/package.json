@@ -99,6 +99,7 @@
     "reflect-metadata": "^0.1.13",
     "sequelize": "^5.21.13",
     "sequelize-typescript": "^1.1.0",
-    "terser-webpack-plugin": "^3.0.4"
+    "terser-webpack-plugin": "^3.0.4",
+    "three": "^0.119.1"
   }
 }

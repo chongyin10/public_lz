@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import styles from '@/page/components/system/power/index.module.css';
+import scssStyles from '@/page/components/system/power/index.module.scss';
 
 export default function Example() {
     const [a, setA] = useState((() => {
@@ -17,10 +19,10 @@ export default function Example() {
     const handleClickA = () => {
         setA(a + 1);
     }
-
     return (
         <div>
-            <h1> hook写法应用 </h1>
+            <h1 className={styles.fontsizeSpan}> hook写法应用 </h1>
+            <span className={scssStyles.fontsizeSpan}> module.scss引用 </span>
             <p>You clicked {a} times</p>
             <button onClick={handleClickA}>
                 Click a
